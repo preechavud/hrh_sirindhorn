@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บอร์ดที่ 7 - พระราชกรณียกิจ ด้านความสัมพันธ์กับต่างประเทศ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Poppins:wght@400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .board-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            position: relative;
+        }
+
+        .inner-canvas {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 40px 35px;
+            width: 100%;
+        }
+
+        /* หัวเรื่องใหญ่ */
+        .main-heading {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+
+        /* กรอบรูปโลหะเงินเงา คุมธีมมาตรฐาน */
+        .img-frame {
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #e0e0e0;
+            outline: 1px solid #7a7a7a;
+            box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 3;
+        }
+
+        .placeholder-info {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+
+        /* โซนลายเซ็น พื้นใส ไม่มีกรอบ */
+        .signature-area {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 40px;
+        }
+        .signature-area img {
+            max-width: 450px;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+        .sig-label {
+            color: #ffeb3b;
+            text-align: center;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* กรอบข้อความยืดอัตโนมัติ */
+        .desc-box-auto {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: auto;
+        }
+
+        .desc-box-auto p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 2.5em;
+        }
+
+        /* TIMELINE SYSTEM (สไตล์บอร์ด 2) */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: 60px auto 40px;
+            padding: 20px 0;
+        }
+
+        .timeline-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ffffff;
+            top: 0; bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.4);
+        }
+
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #ffeb3b;
+            border: 4px solid #5d4668;
+            top: 40px;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 0 3px #ffffff;
+        }
+
+        .tl-left { left: 0; }
+        .tl-right { left: 50%; }
+        .tl-right::after { left: -10px; }
+
+        .tl-card {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tl-year {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffeb3b;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .tl-body {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .tl-img {
+            flex-shrink: 0;
+            width: 100px; height: 100px;
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #fff;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+
+        .tl-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+
+        .tl-text { font-size: 0.9rem; line-height: 1.6; text-align: justify; }
+
+        /* ตราสัญลักษณ์ */
+        .emblem-center {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 10px;
+        }
+        .emblem-box { width: 140px; height: 175px; }
+        .emblem-box img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* FOOTER NAVIGATION */
+        footer { background-color: #2c1933; width: 100%; padding: 25px 10px; text-align: center; border-top: 2px solid #a589b4; margin-top: 40px; }
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .nav-links a { padding: 8px 16px; background-color: #432a4e; color: #ffffff; text-decoration: none; font-size: 0.9rem; border-radius: 4px; border: 1px solid #71527e; }
+        .nav-links a.active { background-color: #ffffff; color: #2c1933; font-weight: 600; }
+        .copyright-section { background-color: #1a0f21; width: 100%; padding: 25px 20px; text-align: center; color: #dcdcdc; font-size: 0.85rem; line-height: 1.6; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: 600; margin-top: 15px; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .timeline-wrapper::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 21px; right: auto; }
+            .tl-right { left: 0; }
+            .tl-body { flex-direction: column; align-items: center; }
+            .tl-img { width: 100%; max-width: 150px; height: 120px; }
+            .main-heading { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <div class="inner-canvas">
+
+            <div class="main-heading">
+                พระราชกรณียกิจ<br>ด้านความสัมพันธ์กับต่างประเทศ
+            </div>
+
+            <div class="img-frame" style="height: 520px;">
+                <div class="placeholder-info">
+                    <b>main.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 1120 x 520 px (แนวนอนเดี่ยว)</span>
+                </div>
+                <img src="images7/main.jpg" onerror="this.style.display='none';">
+            </div>
+
+            <div class="signature-area">
+                <div style="text-align: center;">
+                    <img src="images7/signature.png" alt="Royal Signature" onerror="this.style.display='none';">
+                    <span class="sig-label">signature.png (ลายเซ็นพื้นใส ไม่มีกรอบ)</span>
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี ทรงมีพระเมตตาและทรงห่วงใยในทุกข์สุขของผู้คนมิได้จำกัดอยู่เพียงพสกนิกรชาวไทยเท่านั้น หากยังแผ่ไพศาลไปถึงเพื่อนบ้านในภูมิภาคเอเชีย อาทิ สาธารณรัฐประชาธิปไตยประชาชนลาว สาธารณรัฐแห่งสหภาพเมียนมา
+ราชอาณาจักรกัมพูชา สาธารณรัฐสังคมนิยมเวียดนาม ประเทศมองโกเลีย ราชอาณาจักรภูฏาน สาธารณรัฐประชาชนบังกลาเทศ สาธารณรัฐอินโดนีเซีย สาธารณรัฐฟิลิปปินส์ และสาธารณรัฐประชาธิปไตยติมอร์-เลสเต โดยทรงขยายผลสำเร็จจากโครงการอันเนื่องมาจากพระราชดำริไปสู่เด็ก เยาวชน
+และผู้ด้อยโอกาส เพื่อให้แต่ละประเทศได้น้อมนำไปประยุกต์ใช้ตามบริบทของตนอย่างเหมาะสม เกิดผลที่เป็นรูปธรรมและยั่งยืนในระยะยาว นอกจากนี้ ยังทรงประสานความร่วมมือกับองค์การระหว่างประเทศหลายแห่ง เช่น องค์การยูเนสโก (UNESCO) โครงการอาหารโลก (WFP) องค์การอาหารและเกษตรแห่งสหประชาชาติ (FAO) รวมถึงภาคเอกชนเพื่อร่วมแรงร่วมใจสร้างสรรค์ความผาสุก ความสงบ และคุณภาพชีวิตที่ดีแก่ผู้คนในโลกยุคไร้พรมแดน
+</p>
+<p>ด้วยเหตุนี้ สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี จึงทรงได้รับการยกย่องจากนานาประเทศในพระปรีชาสามารถ รวมถึงแนวการปฏิบัติพระราชกรณียกิจด้วยพระวิริยอุตสาหะและการพัฒนางานอย่างไม่หยุดยั้ง จนเกิดผลสำเร็จที่เป็นรูปธรรม และกลายเป็นแรงบันดาลใจในการพัฒนาทรัพยากรมนุษย์อย่างต่อเนื่อง
+            </div>
+
+            <div class="img-frame" style="width: 100%; max-width: 700px; height: 900px; margin: 0 auto 40px;">
+                <div class="placeholder-info">
+                    <b>vertical_hero.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้งเดี่ยว)</span>
+                </div>
+                <img src="images7/vertical_hero.jpg" onerror="this.style.display='none';">
+            </div>
+
+            <div class="desc-box-auto">
+                <p>ตัวอย่างผลสำเร็จของโครงการความร่วมมือด้านการพัฒนาคุณภาพชีวิตเด็กและเยาวชนในโรงเรียนสาธารณรัฐประชาธิปไตยประชาชนลาวตามพระราชดำริฯ ที่ทรงพระกรุณาโปรดเกล้าฯ ให้จัดทำขึ้น เพื่อส่งเสริมโภชนาการและสุขอนามัยในเด็กและเยาวชน การทำการเกษตรที่เป็นมิตรกับสิ่งแวดล้อมในโรงเรียน  และการอนุรักษ์ทรัพยากรธรรมชาติ และสิ่งแวดล้อม รวมไปถึงการอนุรักษ์ศิลปะและวัฒนธรรมท้องถิ่น มีโรงเรียนที่เข้าร่วมโครงการในระบบประถมศึกษา และมัธยมศึกษา จำนวน ๑๕ แห่ง จาก ๖ แขวง และเสด็จพระราชดำเนินไปทรงติดตามความก้าวหน้าการดำเนินงานย่างต่อเนื่อง ได้ทอดพระเนตรชีวิตความเป็นอยู่ของประชาชนสาธารณรัฐประชาธิปไตยประชาชนลาวอย่างใกล้ชิดและทรงรับทราบถึงปัญหาและอุปสรรคต่าง ๆ จึงมีพระราชดำริให้ขยายความร่วมมือระหว่างประเทศในหลายมิติ เพื่อยกระดับคุณภาพชีวิต</p>
+            </div>
+
+
+            <div class="img-frame" style="width: 100%; max-width: 1020px; height: 950px; margin: 0 auto 40px;">
+                <div class="placeholder-info">
+                    <b>timeline.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้งเดี่ยว)</span>
+                </div>
+                <img src="images7/timeline.jpg" onerror="this.style.display='none';">
+            </div>
+
+
+            <div class="emblem-center">
+                <div class="emblem-box">
+                    <img src="images7/emblem.png" alt="Royal Emblem" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="nav-links">
+            <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
+            
+            <a href="board1.html">บอร์ด 1</a>
+            <a href="board2.html">บอร์ด 2</a>
+            <a href="board3.html">บอร์ด 3</a>
+            <a href="board4.html">บอร์ด 4</a>
+            <a href="board5.html">บอร์ด 5</a>
+            <a href="board6.html">บอร์ด 6</a>
+            <a href="board7.html">บอร์ด 7</a>
+            <a href="board8.html">บอร์ด 8</a>
+            <a href="board9.html">บอร์ด 9</a>
+        </div>
+    </footer>
+
+    <div class="copyright-section">
+        <div class="copyright-text">
+            สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)<br>
+            เลขที่ 2012 ซอยอรุณอมรินทร์ 36 ถนนอรุณอมรินทร์ แขวงบางยี่ขัน เขตบางพลัด กรุงเทพฯ 10700
+        </div>
+        <div>
+            <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:white; margin-right:8px; vertical-align:middle;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                ติดตามข้อมูลโครงการ กปร.
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

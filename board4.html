@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บอร์ดที่ 4 - พระราชกรณียกิจด้านพัฒนาชุมชนและการเกษตร</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .board-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            position: relative;
+        }
+
+        .board-inner-border {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 40px 35px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* -----------------------------------------------
+           STYLE: กรอบรูปโลหะเงินเงา คุมธีมบอร์ดน้าเหมือนเดิม
+        -------------------------------------------------- */
+        .img-frame {
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #e0e0e0;
+            outline: 1px solid #7a7a7a;
+            box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 3;
+        }
+
+        .placeholder-info {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 15px;
+        }
+        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+
+        /* 1. แก้ไข: ปรับขนาดและสัดส่วนภาพใหญ่เดี่ยวบนสุดให้เป็นแนวตั้ง */
+        .single-main-img-vertical {
+            width: 100%;
+            max-width: 480px;  /* คุมความกว้างไม่ให้บานออกแนวนอน */
+            height: 680px;     /* ความสูงรับสัดส่วนแนวตั้งทรงยืน */
+            margin: 0 auto 30px; /* จัดกึ่งกลางอัตโนมัติ */
+        }
+
+        /* 2. การจัดวางกรอบภาพคู่ ซ้าย-ขวา */
+        .img-pair-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .pair-img-height {
+            height: 380px;
+        }
+
+        /* -----------------------------------------------
+           STYLE: กรอบข้อความยืดอัตโนมัติ & หัวเรื่องใหญ่
+        -------------------------------------------------- */
+        .desc-box-auto {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: auto; 
+        }
+
+        .desc-box-auto p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 2.5em;
+        }
+
+        .main-heading-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 35px 0 30px;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* ตราสัญลักษณ์กึ่งกลางท้ายบอร์ด */
+        .emblem-center {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 10px;
+        }
+        .emblem-box { width: 140px; height: 175px; }
+        .emblem-box img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* FOOTER SYSTEM */
+        footer { background-color: #2c1933; width: 100%; padding: 25px 10px; text-align: center; border-top: 2px solid #a589b4; margin-top: 40px; }
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .nav-links a { padding: 8px 16px; background-color: #432a4e; color: #ffffff; text-decoration: none; font-size: 0.9rem; border-radius: 4px; border: 1px solid #71527e; }
+        .nav-links a.active { background-color: #ffffff; color: #2c1933; font-weight: 600; }
+        .copyright-section { background-color: #1a0f21; width: 100%; padding: 25px 20px; text-align: center; color: #dcdcdc; font-size: 0.85rem; line-height: 1.6; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: 600; margin-top: 15px; font-size: 0.8rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .img-pair-row { grid-template-columns: 1fr; gap: 15px; }
+            .pair-img-height { height: 280px; }
+            .single-main-img-vertical { height: 500px; }
+            .main-heading-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <div class="board-inner-border">
+
+            <div class="img-frame single-main-img-vertical">
+                <div class="placeholder-info">
+                    <b>main.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้ง/ทรงยืน)</span>
+                </div>
+                <img src="images4/main.jpg" onerror="this.style.display='none';">
+            </div>
+
+            <div class="img-pair-row">
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img1.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img1.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img2.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img2.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+<p style="text-indent: 40px;">
+“… ถ้าเราจะเริ่มโครงการใด เช่น บอกให้เกษตรกรปลูกพืชหรือเลี้ยงสัตว์ชนิดใด
+ย่อมมีความเสี่ยงมากมาย อาทิ ภูมิอากาศอาจแปรปรวน เกษตรกรจึงเสี่ยงต่อการ
+ล้มละลายและมีความเดือดร้อนตามมา โดยที่หน่วยงานเอกชนหรือรัฐที่แนะนำให้เขาปลูก
+ยังไม่ต้องรับผิดชอบในช่วงนี้ ดังนั้นการทดลองนำร่องจนเรามั่นใจว่างานนั้นทำได้จริง จึงนับว่าเป็นการจัดการความเสี่ยงอย่างหนึ่ง”
+</p>
+<br><p style="text-align: right;">
+<br>พระราชดำรัสในการประชุมแห่งองค์การสหประชาชาติ ว่าด้วยการค้าและการพัฒนา (อังค์ถัด) 
+<br>ครั้งที่ ๑๒ การประชุมโต๊ะกลมระดับสูง (United Nations High-Level Roundtable) 
+<br>ณ กรุงอักกรา สาธารณรัฐกานา แอฟริกา
+<br>วันพฤหัสบดีที่ ๒๔ เมษายน พ.ศ. ๒๕๕๑
+</p>
+            </div>
+
+            <div class="main-heading-title">
+                พระราชกรณียกิจ<br>ด้านพัฒนาชุมชนและการเกษตร
+            </div>
+
+            <div class="img-pair-row">
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img3.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img3.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img4.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+ด้วยทรงตระหนักว่า การลงทุนศึกษาทดลองเพื่อสร้างอาชีพและผลผลิตใหม่ ๆ
+จากการทำเกษตรมีความเสี่ยงหลายประการเป็นข้อจำกัดให้เกษตรกรในพื้นที่ห่างไกล
+ทุรกันดารไม่กล้าปรับเปลี่ยนกระบวนการเพาะปลูก เพิ่มชนิดพืชพรรณใหม่ ๆ หรือเพิ่ม
+ปริมาณผลผลิตให้สอดคล้องกับความต้องการของตลาดเพื่อเพิ่มรายได้ ในขณะที่
+การใช้ชีวิตในวิถีเดิมไม่สามารถเลี้ยงชีพได้เพราะผลผลิตไม่เป็นที่ต้องการของตลาด
+หรือไม่เพียงพอสำหรับการบริโภคในชุมชน จึงมีพระราชดำริให้จัดตั้งโครงการต่าง ๆ
+เพื่อส่งเสริมความรู้ทางการเกษตรที่ถูกต้องเหมาะสม ทั้งด้านกระบวนการเพาะปลูกและ
+พันธุ์พืชใหม่ ๆ เพื่อให้ราษฎรเห็นว่าทำได้จริง มีผลสำเร็จ เช่น ...
+
+</p>
+            </div>
+
+            <div class="img-pair-row">
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img5.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img5.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img6.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img6.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๓๕ โครงการอนุรักษ์พันธุกรรมพืช (อพ.สธ.)
+<br>มีพระราชดำริให้ดำเนินการจัดตั้ง โครงการอนุรักษ์พันธุกรรมพืช (อพ.สธ.) และ 
+ธนาคารพืชพรรณ สำหรับเก็บรักษาพันธุกรรมพืชที่เป็นเมล็ดและเนื้อเยื่อ ขึ้นใน พ.ศ. ๒๕๓๖
+เพื่ออนุรักษ์พืชพรรณของประเทศไทย และสนับสนุนงบประมาณให้แก่สถาบันการศึกษา
+และหน่วยงานต่าง ๆ ที่เกี่ยวข้องดำเนิน กิจกรรมภายใต้โครงการ โดยมีกรอบการดำเนินงาน
+๓ ส่วน คือ การเรียนรู้ การใช้ประโยชน์  และการสร้างจิตสำนึก จนถึงปัจจุบัน โครงการมีการ
+จัดทำระบบข้อมูลพันธุกรรมพืชอย่างแพร่หลายสามารถสื่อถึงกันได้ทั่วประเทศ ประชาชนได้รับประโยชน์จากความหลากหลาย และตระหนักถึงความสำคัญของพันธุกรรมพืชต่าง ๆ
+ที่มีอยู่ในประเทศไทย เกิดการร่วมคิดร่วมปฏิบัติที่เป็นส่วนสำคัญต่อการพัฒนาอย่างยั่งยืน 
+
+
+</p>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๓๘ โครงการกลุ่มอาชีพประชาชนในถิ่นทุรกันดาร
+<br>ให้จัดตั้งโครงการส่งเสริมอาชีพ เพื่อให้ประชาชนในพื้นที่ทุรกันดารได้มีอาชีพ มีรายได้
+ให้ครอบครัวพึ่งตนเองได้ และมีความเป็นอยู่ให้ดีขึ้น เกิดชุมชนที่เข้มแข็งยั่งยืน รวมกลุ่มกันเกิดเป็น “กลุ่มอาชีพประชาชนในถิ่นทุรกันดารตามพระราชดำริ” พระราชทานเงินให้เป็น
+กองทุนของกลุ่ม พระราชทานเครื่องมือ วัสดุอุปกรณ์ ก่อสร้างอาคารและจัดหาครูฝึกอบรมเพิ่มทักษะฝีมือและคุณภาพของผลิตภัณฑ์ ปัจจุบันมีกลุ่มอาชีพประชาชนใน
+ถิ่นทุรกันดารกระจายอยู่ในพื้นที่โครงการตามพระราชดำริอื่น ๆ ครอบคลุมทุกภาคของประเทศ
+
+</p>
+            </div>
+
+            <div class="img-pair-row">
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img7.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img7.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img8.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img8.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๓๘ อุทยานธรรมชาติวิทยาอันเนื่องมาจากพระราชดำริ จังหวัดราชบุรี
+<br>ให้จัดตั้งโครงการส่งเสริมอาชีพ เพื่อให้ประชาชนในพื้นที่ทุรกันดารได้มีอาชีพ มีรายได้
+จากการเสด็จพระราชดำเนินไปทรงติดตามความก้าวหน้าโครงการพัฒนาเด็กและเยาวชนในพื้นที่ทุรกันดารหลายครั้ง ทรงพบว่าพื้นที่สุดเขตแดนด้านตะวันตกของอำเภอสวนผึ้ง จังหวัดราชบุรี เป็นเทือกเขาตะนาวศรี ซึ่งเป็นพรมแดนธรรมชาติระหว่างไทยกับเมียนมา  มีความหลากหลายทางกายภาพและชีวภาพ อีกทั้งพื้นที่ดังกล่าวอยู่ไม่ไกล
+จากกรุงเทพมหานคร จึงมีพระราชดำริให้ดำเนินโครงการอุทยานธรรมชาติวิทยาขึ้นเพื่อเป็น
+แหล่งเรียนรู้สภาพธรรมชาติวิทยาสำหรับเยาวชนและประชาชน
+</p>
+            </div>
+
+            <div class="img-pair-row">
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img9.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img9.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame pair-img-height">
+                    <div class="placeholder-info"><b>img10.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images4/img10.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+<p>				
+พ.ศ. ๒๕๔๒ ศูนย์ภูฟ้าพัฒนาอันเนื่องมาจากพระราชดำริ จังหวัดน่าน
+<br>อำเภอบ่อเกลือ อยู่ในพื้นที่ภูเขาสูง พื้นที่เพาะปลูกเป็นไหล่เขาลาดชันและผ่านการทําการ
+เกษตรอย่างไม่เหมาะสมส่งผลให้ป่าไม้ น้ำ และดิน เสื่อมโทรมลง ทำให้ผลิตข้าวไม่เพียงพอ
+ต่อการบริโภคและไม่มีอาชีพเสริมที่จะสร้างรายได้ให้แก่ครอบครัว มีพระราชดำริให้ตั้งศูนย์ภูฟ้าพัฒนาขึ้นเพื่อส่งเสริมให้ประชาชนในพื้นที่สามารถผลิตอาหารได้เพียงพอ
+ต่อการบริโภค มีรายได้ และมีคุณภาพชีวิตที่ดีขึ้น พร้อม ๆ กับการฟื้นฟูป่าและชุมชน 
+</p>
+<br>
+<p>
+พ.ศ. ๒๕๕๑ ศูนย์เรียนรู้การพัฒนาอมก๋อยอันเนื่องมาจากพระราชดำริ  จังหวัดเชียงใหม่
+<br>อำเภออมก๋อยเป็นภูเขาสลับซับซ้อนต้นกำเนิดของแม่น้ำลำธาร   แต่ทุรกันดารรถเข้าไม่ถึง
+ทำให้เด็กขาดโอกาสทางการศึกษา ประชาชนยากลำบาก จึงทรงให้นำโครงการพัฒนาเด็ก
+และเยาวชนมาดำเนินการในศูนย์การเรียนชุมชนชาวไทยภูเขา “แม่ฟ้าหลวง” อำเภออมก๋อย ใน พ.ศ. ๒๕๔๑ เพื่อให้เด็กได้รับโอกาสในการศึกษาและพัฒนาสภาพพื้นที่ชุมชน และมีพระราชดำริให้รวมกลุ่มกันทอผ้ากะเหรี่ยงเป็นอาชีพสร้างรายได้ให้ครอบครัว สร้างความเจริญให้ชุมชนเป็นลำดับ
+</p>
+<br>
+<p>
+พ.ศ. ๒๕๕๖ โครงการสร้างป่า สร้างรายได้
+<br>มีพระราชดำริให้จัดตั้ง “โครงการสร้างป่า สร้างรายได้” จากโครงการนำร่องในพื้นที่จังหวัดน่าน และจังหวัดเลย แล้วขยายไปยังจังหวัดเชียงใหม่, แม่ฮ่องสอน และตาก พระราชทานวิธีอนุรักษ์และฟื้นฟูป่าไม้ผสมผสานกับการปลูกพืชเกษตร หรือไม้เศรษฐกิจตามลำดับชั้นเรือนยอด เกิดความอุดมสมบูรณ์เป็นแหล่งอาหารและแหล่งรายได้ที่ยั่งยืน
+</p>
+            </div>
+
+            <div class="emblem-center">
+                <div class="emblem-box">
+                    <img src="images4/emblem.png" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="nav-links">
+            <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
+            
+            <a href="board1.html">บอร์ด 1</a>
+            <a href="board2.html">บอร์ด 2</a>
+            <a href="board3.html">บอร์ด 3</a>
+            <a href="board4.html">บอร์ด 4</a>
+            <a href="board5.html">บอร์ด 5</a>
+            <a href="board6.html">บอร์ด 6</a>
+            <a href="board7.html">บอร์ด 7</a>
+            <a href="board8.html">บอร์ด 8</a>
+            <a href="board9.html">บอร์ด 9</a>
+        </div>
+    </footer>
+
+    <div class="copyright-section">
+        <div class="copyright-text">
+            สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)<br>
+            เลขที่ 2012 ซอยอรุณอมรินทร์ 36 ถนนอรุณอมรินทร์ แขวงบางยี่ขัน เขตบางพลัด กรุงเทพฯ 10700
+        </div>
+        <div>
+            <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:white; margin-right:8px; vertical-align:middle;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                ติดตามข้อมูลโครงการ กปร.
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

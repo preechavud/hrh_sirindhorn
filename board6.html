@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บอร์ดที่ 6 - พระราชกรณียกิจ ด้านอนุรักษ์วัฒนธรรมและศิลปะ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .board-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            position: relative;
+        }
+
+        .board-inner-border {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 40px 35px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* -----------------------------------------------
+           STYLE: กรอบรูปโลหะเงินเงา คุมธีมระบบบอร์ดน้า
+        -------------------------------------------------- */
+        .img-frame {
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #e0e0e0;
+            outline: 1px solid #7a7a7a;
+            box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 3;
+        }
+
+        .placeholder-info {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 10px;
+        }
+        .placeholder-info b { color: #ffeb3b; font-size: 1.05rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.8rem; font-weight: 600; display: block; margin-top: 3px; }
+
+        /* การตั้งค่า Grid จัดวางภาพขนาดต่างๆ */
+        .main-horizontal-frame {
+            width: 100%;
+            height: 700px;
+            margin-bottom: 25px;
+        }
+
+        .img-pair-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .pair-height {
+            height: 380px;
+        }
+
+        /* -----------------------------------------------
+           NEW STYLE: โครงสร้างกรอบกลุ่มแบบวาง 3 รูป
+        -------------------------------------------------- */
+        /* แบบที่ 1: ซ้ายนอน 2 รูป / ขวาตั้ง 1 รูป */
+        .grid-3-layout-left-horizontal {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+            height: 600px;
+            margin-bottom: 25px;
+        }
+        .sub-left-stack {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* แบบที่ 2: ซ้ายตั้ง 1 รูป / ขวานอน 2 รูป */
+        .grid-3-layout-left-vertical {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 25px;
+            height: 600px;
+            margin-bottom: 25px;
+        }
+        .sub-right-stack {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* -----------------------------------------------
+           STYLE: กรอบข้อความยืดอัตโนมัติ & ตัวหนังสือหัวข้อ
+        -------------------------------------------------- */
+        .desc-box-auto {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: auto; 
+        }
+
+        .desc-box-auto p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 2.5em;
+        }
+
+        .main-heading-title {
+            font-size: 3.4rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 15px 0 30px;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            line-height: 1.25;
+        }
+
+        /* ตราสัญลักษณ์กึ่งกลางบอร์ด */
+        .emblem-center {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 10px;
+        }
+        .emblem-box { width: 140px; height: 175px; }
+        .emblem-box img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* FOOTER SYSTEM */
+        footer { background-color: #2c1933; width: 100%; padding: 25px 10px; text-align: center; border-top: 2px solid #a589b4; margin-top: 40px; }
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .nav-links a { padding: 8px 16px; background-color: #432a4e; color: #ffffff; text-decoration: none; font-size: 0.9rem; border-radius: 4px; border: 1px solid #71527e; }
+        .nav-links a.active { background-color: #ffffff; color: #2c1933; font-weight: 600; }
+        .copyright-section { background-color: #1a0f21; width: 100%; padding: 25px 20px; text-align: center; color: #dcdcdc; font-size: 0.85rem; line-height: 1.6; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: 600; margin-top: 15px; font-size: 0.8rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .img-pair-row, .grid-3-layout-left-horizontal, .grid-3-layout-left-vertical { grid-template-columns: 1fr; height: auto; }
+            .sub-left-stack, .sub-right-stack { gap: 15px; }
+            .pair-height, .grid-3-layout-left-horizontal .img-frame, .grid-3-layout-left-vertical .img-frame { height: 280px; }
+            .main-horizontal-frame { height: 300px; }
+            .main-heading-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <div class="board-inner-border">
+
+            <div class="img-frame main-horizontal-frame">
+                <div class="placeholder-info">
+                    <b>main.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 1120 x 500 px (แนวนอนเต็มบอร์ด)</span>
+                </div>
+                <img src="images6/main.jpg" onerror="this.style.display='none';">
+            </div>
+
+            <div class="main-heading-title">
+                พระราชกรณียกิจ<br>ด้านอนุรักษ์วัฒนธรรมและศิลปะ
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+“ศิลปะทุกด้าน ทุกแขนง ของทุกชาติ ต่างก็อำนวยประโยชน์ในการสร้างสรรค์ความสุข ความมั่นคง และความสัมพันธ์ ทั้งในระดับบุคคล ระดับสังคม ระดับประเทศ
+ไปจนถึงระดับโลกด้วยกันทั้งสิ้น...”
+</p>
+<p style="text-align: right;">
+<br>พระราโชวาท สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี
+<br>ในพิธีพระราชทานปริญญาบัตรแก่ผู้สำเร็จการศึกษาสถาบันบัณฑิตพัฒนศิลป์ ประจำปีการศึกษา ๒๕๖๐
+</p>
+            </div>
+
+            <div class="grid-3-layout-left-horizontal">
+                <div class="sub-left-stack">
+                    <div class="img-frame">
+                        <div class="placeholder-info"><b>img1.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 600 x 230 px</span></div>
+                        <img src="images6/img1.jpg" onerror="this.style.display='none';">
+                    </div>
+                    <div class="img-frame">
+                        <div class="placeholder-info"><b>img2.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 600 x 230 px</span></div>
+                        <img src="images6/img2.jpg" onerror="this.style.display='none';">
+                    </div>
+                </div>
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img3.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 500 x 480 px</span></div>
+                    <img src="images6/img3.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+ทรงเป็นเอกอัครราชูปถัมภกมรดกวัฒนธรรมไทย (พ.ศ.๒๕๓๑) และ วิศิษฏศิลปิน (พ.ศ.๒๕๔๖) ด้วยมีพระราชจริยวัตรทางดนตรี สืบเนื่องตั้งแต่ครั้งทรงพระเยาว์ที่ได้ทรงเริ่มศึกษาดนตรีไทย “ซอด้วง” เมื่อพระชนมายุ ๑๔ พรรษา ขณะกำลังศึกษา
+ชั้นมัธยมศึกษาปีที่ ๒ โรงเรียนจิตรลดา ทรงพระราชนิพนธ์ และทรงร้องเพลงไทยเดิมหลายเพลง นอกจากโปรดการดนตรีไทยแล้ว ยังมีพระราชดำริส่งเสริมการใช้ภาษาไทย และวรรณกรรมไทย การอนุรักษ์และพัฒนาศิลปวัฒนธรรมไทยทั้งการช่างไทย นาฏศิลป์ไทย
+งานพิพิธภัณฑ์ ประวัติศาสตร์ และโบราณสถาน</p>
+            </div>
+
+            <div class="img-pair-row pair-height">
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img4.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img5.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img5.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๑๖ ขณะทรงศึกษาระดับอุดมศึกษาที่คณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย ทรงเข้าร่วมเป็นสมาชิกในชมรมดนตรีไทย สจม. ทรงศึกษารายละเอียดในดนตรีไทยทั้งทางทฤษฎีและปฏิบัติ ชำระตรวจทานโน้ตเพลง บันทึกและเผยแพร่บทความพระราชนิพนธ์ด้านดนตรีไทย พระราชทานข้อวินิจฉัย แนะนำ โดยทรงปฏิบัติ
+เป็นแบบอย่าง และบ่อยครั้งที่ทรงดนตรีไทยร่วมกับนักดนตรี มีพระราชดำริให้สนับสนุนการอนุรักษ์เครื่องดนตรีไทยโบราณ ใช้เครื่องดนตรีไทยในโรงเรียนเพื่อการเรียนดนตรีของเยาวชน ทำให้ไม่ต้องใช้เครื่องดนตรีต่างประเทศซึ่งมีค่าใช้จ่ายที่สูง และยังเป็นการส่งเสริมช่างทำเครื่องดนตรีไทยให้มีที่จำหน่ายผลงาน
+</p>
+            </div>
+
+            <div class="img-pair-row pair-height">
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img6.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img6.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img7.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img7.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๒๕ ในวาระสมโภชกรุงรัตนโกสินทร์ ๒๐๐ ปี ทรงรับเป็นองค์ประธานกรรมการอำนวยการบูรณปฏิสังขรณ์ พระบรมมหาราชวัง และวัดพระศรีรัตนศาสดาราม อันประกอบด้วย พระมหาปราสาทราชมณเฑียร ตลอดจนเครื่องราชูปโภคต่าง ๆ ซึ่งล้วนต้องใช้ฝีมือช่างสิบหมู่ในการดำเนินการ แต่กลับขาดแคลนช่าง จึงมีพระราชดำริให้
+ถ่ายทอดวิชาช่างสิบหมู่ให้แก่คนรุ่นใหม่ จัดฝึกอบรมงานช่างฝีมือต่าง ๆ ให้สามารถเป็นกำลังในงานอนุรักษ์ศิลปะโบราณวัตถุได้โดยไม่เก็บค่าเล่าเรียน จึงมีการจัดตั้งโรงเรียนผู้ใหญ่พระตำหนักสวนกุหลาบ วิทยาลัยในวัง(ชาย) ขึ้นใน พ.ศ. ๒๕๓๒ ซึ่งต่อมาได้รับพระราชทานนามใหม่คือ “โรงเรียนช่างฝีมือในวัง(ชาย)”
+</p>
+            </div>
+
+            <div class="grid-3-layout-left-vertical">
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img8.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 500 x 480 px</span></div>
+                    <img src="images6/img8.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="sub-right-stack">
+                    <div class="img-frame">
+                        <div class="placeholder-info"><b>img9.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 600 x 230 px</span></div>
+                        <img src="images6/img9.jpg" onerror="this.style.display='none';">
+                    </div>
+                    <div class="img-frame">
+                        <div class="placeholder-info"><b>img10.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 600 x 230 px</span></div>
+                        <img src="images6/img10.jpg" onerror="this.style.display='none';">
+                    </div>
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๒๘ รัฐบาลได้ประกาศให้วันที่ ๒ เมษายน ของทุกปี ซึ่งเป็นวันคล้ายวันพระราชสมภพของสมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา สยามบรมราชกุมารี เป็น “วันอนุรักษ์มรดกไทย” ด้วยตระหนักในพระปรีชาสามารถ และพระมหากรุณาที่ทรงสนับสนุนกิจกรรมในด้านศิลปวัฒนธรรมของประเทศชาติเสมอมา</p>
+            </div>
+
+            <div class="img-pair-row pair-height">
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img11.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img11.jpg" onerror="this.style.display='none';">
+                </div>
+                <div class="img-frame">
+                    <div class="placeholder-info"><b>img12.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
+                    <img src="images6/img12.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="desc-box-auto">
+                <p>
+พ.ศ. ๒๕๔๘ มีพระราชดำริให้ส่งเสริมการเผยแพร่วัฒนธรรมไทยด้วย “โครงการฟื้นฟูศิลปะการแสดงพื้นบ้าน ตามพระราชดำริฯ” โดยหน่วยงานที่เกี่ยวข้อง เช่น กรมศิลปากร กระทรวงวัฒนธรรม หน่วยงานการศึกษา และชุมชนท้องถิ่นต่าง ๆ ร่วมกันสนับสนุนและส่งเสริมการอนุรักษ์ศิลปะการแสดงพื้นบ้าน สำรวจและเก็บข้อมูลทางประวัติศาสตร์ รูปแบบการแสดงและความสำคัญต่อชุมชน จากนั้นจึงถ่ายทอดความรู้โดยสนับสนุนเครื่องดนตรีและอุปกรณ์รวมถึงสถานที่และโอกาสในการแสดง ช่วยให้ศิลปะการแสดงพื้นบ้านทั้ง ๔ ภาค ได้กลับมาเป็นที่รู้จัก ไม่สูญหายไป เช่น การแสดงซอพื้นบ้านของภาคเหนือ การแสดงหมอลำและโปงลาง ภาคอีสาน ภาคใต้ เช่น โนรา และ หนังตะลุง และภาคกลาง เช่น ลิเก เพลงพื้นบ้าน และยังส่งเสริมให้มีการเผยแพร่โดยประยุกต์ใช้สื่อดิจิทัลและการแสดงออนไลน์เพื่อเข้าถึงกลุ่มคนรุ่นใหม่ได้อย่างกว้างขวาง ทำให้เกิดการรักษาและสืบสานมรดกทางวัฒนธรรมอันทรงคุณค่า     
+</p>
+            </div>
+
+            <div class="emblem-center">
+                <div class="emblem-box">
+                    <img src="images6/emblem.png" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="nav-links">
+            <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
+            
+            <a href="board1.html">บอร์ด 1</a>
+            <a href="board2.html">บอร์ด 2</a>
+            <a href="board3.html">บอร์ด 3</a>
+            <a href="board4.html">บอร์ด 4</a>
+            <a href="board5.html">บอร์ด 5</a>
+            <a href="board6.html">บอร์ด 6</a>
+            <a href="board7.html">บอร์ด 7</a>
+            <a href="board8.html">บอร์ด 8</a>
+            <a href="board9.html">บอร์ด 9</a>
+        </div>
+    </footer>
+    <div class="copyright-section">
+        <div class="copyright-text">
+            สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)<br>
+            เลขที่ 2012 ซอยอรุณอมรินทร์ 36 ถนนอรุณอมรินทร์ แขวงบางยี่ขัน เขตบางพลัด กรุงเทพฯ 10700
+        </div>
+        <div>
+            <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:white; margin-right:8px; vertical-align:middle;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                ติดตามข้อมูลโครงการ กปร.
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บอร์ดที่ 1 - สู่สายธารแห่งการพัฒนา</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .board-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            position: relative;
+        }
+
+        .board-inner-border {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 30px 25px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ส่วนบน: หัวข้อพระนาม และ กลุ่มภาพจัดแนวกริด */
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .royal-header {
+            font-size: 1.85rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
+        }
+
+        .image-grid-left {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .grid-item-center {
+            grid-row: span 2;
+        }
+
+        /* กรอบภาพบางสีเงินเมทัลลิก */
+        .img-box {
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #e0e0e0;
+            outline: 1px solid #7a7a7a;
+            box-shadow: 
+                0 0 0 1px #ffffff, 
+                0 4px 12px rgba(0,0,0,0.3), 
+                inset 0 0 8px rgba(255,255,255,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .grid-item-center.img-box {
+            aspect-ratio: 3/4;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .placeholder-info {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .placeholder-info b {
+            color: #ffeb3b;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .placeholder-dim {
+            color: #a2f2a2;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .placeholder-info span {
+            font-size: 0.7rem;
+            color: #e0e0e0;
+            line-height: 1.2;
+        }
+
+        .main-royal-img-box {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 2px solid #f0f0f0;
+            outline: 1px solid #888888;
+            box-shadow: 0 0 0 2px #ffffff, 0 8px 24px rgba(0,0,0,0.4), inset 0 0 15px rgba(255,255,255,0.2);
+            aspect-ratio: 1 / 1.45;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .main-royal-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        /* ส่วนหัวข้อบอร์ดใหญ่ (อยู่กลาง) */
+        .middle-title-section {
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .middle-title-section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        /* ส่วนตัวอักษร 2 คอลัมน์ */
+        .bottom-text-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 0px;
+        }
+
+        
+        .desc-box-left, .desc-box-right {
+            background: rgba(255, 255, 255, 0.12);
+            border-left: 4px solid #ffffff;
+            padding: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .desc-box-full {
+            background: rgba(255, 255, 255, 0.12);
+            border-left: 4px solid #ffffff;
+            padding: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            margin-top: 30px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+	.desc-box-full p {
+            text-indent: 2.5em;
+            text-align: justify;
+        }
+
+        .bottom-text-section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: justify;
+            text-indent: 2em;
+        }
+
+        /* ส่วนตราสัญลักษณ์: อยู่ล่างสุด กึ่งกลาง */
+        .emblem-bottom-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .emblem-box {
+            width: 140px;
+            height: 175px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .emblem-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c1933;
+            width: 100%;
+            padding: 20px 10px;
+            text-align: center;
+            border-top: 2px solid #a589b4;
+            margin-top: 20px;
+        }
+
+        .nav-links { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            margin: 0 auto; 
+        }
+        
+        .nav-links a { 
+            display: inline-block;
+            padding: 8px 16px; 
+            background-color: #432a4e; 
+            color: #ffffff; 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            border-radius: 4px; 
+            border: 1px solid #71527e; 
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a.active { 
+            background-color: #ffffff; 
+            color: #2c1933; 
+            font-weight: 600; 
+            border-color: #ffffff;
+        }
+
+        .nav-links a:hover:not(.active) {
+            background-color: #8a649b;
+            border-color: #ffffff;
+        }
+
+        /* ส่วนประกาศลิขสิทธิ์และที่อยู่ใต้ฟุตเตอร์ */
+        .copyright-section {
+            background-color: #1a0f21;
+            width: 100%;
+            padding: 25px 20px;
+            text-align: center;
+            color: #dcdcdc;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .copyright-text {
+            max-width: 800px;
+            margin: 0 auto 15px;
+            opacity: 0.85;
+        }
+
+        .fb-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1877f2;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .fb-button:hover {
+            background-color: #145dbf;
+            transform: translateY(-1px);
+        }
+
+        .fb-button svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .top-section {
+                grid-template-columns: 1fr;
+            }
+            .main-royal-img-box {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .board-container {
+                padding: 20px;
+                margin: 15px auto;
+            }
+            .bottom-text-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <div class="board-inner-border">
+            
+            <div class="top-section">
+                <div class="top-left-content">
+                    <div class="royal-header">สมเด็จพระกนิษฐาธิราชเจ้า<br>กรมสมเด็จพระเทพรัตนราชสุดา ฯ<br>สยามบรมราชกุมารี</div>
+                    <div class="image-grid-left">
+                        <div class="img-box"><div class="placeholder-info"><b>img1.jpg</b><span class="placeholder-dim">800x600</span></div><img src="images1/img1.jpg" onerror="this.style.display='none';"></div>
+                        <div class="img-box grid-item-center"><div class="placeholder-info"><b>img2.jpg</b><span class="placeholder-dim">600x800</span></div><img src="images1/img2.jpg" onerror="this.style.display='none';"></div>
+                        <div class="img-box"><div class="placeholder-info"><b>img3.jpg</b><span class="placeholder-dim">800x600</span></div><img src="images1/img3.jpg" onerror="this.style.display='none';"></div>
+                        <div class="img-box"><div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">800x600</span></div><img src="images1/img4.jpg" onerror="this.style.display='none';"></div>
+                        <div class="img-box"><div class="placeholder-info"><b>img5.jpg</b><span class="placeholder-dim">800x600</span></div><img src="images1/img5.jpg" onerror="this.style.display='none';"></div>
+                    </div>
+                </div>
+                <div class="top-right-content">
+                    <div class="main-royal-img-box"><div class="placeholder-info"><b>main.jpg</b><span class="placeholder-dim">800x1160</span></div><img src="images1/main.jpg" onerror="this.style.display='none';"></div>
+                </div>
+            </div>
+
+            <div class="middle-title-section">
+                <h2>สู่สายธารแห่งการพัฒนา</h2>
+            </div>
+
+            <div class="bottom-text-section">
+                <div class="desc-box-left">
+                    <p>สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี มีพระราชปณิธานแน่วแน่ในการเจริญรอยตามเบื้องพระยุคลบาทพระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร และสมเด็จพระนางเจ้าสิริกิติ์ พระบรมราชินีนาถ พระบรมราชชนนีพันปีหลวง โดยนับตั้งแต่พุทธศักราช ๒๕๒๐ ทรงริเริ่มโครงการด้านการศึกษาและการพัฒนาคุณภาพชีวิต เพื่อช่วยเหลือเด็กและเยาวชนในพื้นที่ห่างไกล สนับสนุนการสร้างอาชีพในชุมชน ส่งเสริมภูมิปัญญาท้องถิ่น และการฟื้นฟูอนุรักษ์ทรัพยากรธรรมชาติ ทรงให้ความสำคัญใน “การพัฒนาคน” ซึ่งเป็นรากฐานของการพัฒนาประเทศ </p>
+                    <p>ด้วยสายพระเนตรกว้างไกล ทรงนำความรู้สมัยใหม่ วิทยาศาสตร์ และเทคโนโลยีมาใช้อย่างเหมาะสม เพื่อให้ประชาชนสามารถยกระดับคุณภาพชีวิต และปรับตัวต่อการเปลี่ยนแปลงของโลกได้อย่างยั่งยืน ซึ่งสอดคล้องกับพระราชดำริ “เข้าใจ เข้าถึง พัฒนา” ของสมเด็จพระบรมชนกนาถ</p>
+                </div>
+                <div class="desc-box-right">
+                    <p>สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี ทรงปฎิบัติพระราชกรณียกิจนานัปการด้วยพระวิริยะอุตสาหะมาอย่างต่อเนื่องยาวนาน ตั้งแต่รัชสมัยพระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร จวบจนถึงปัจจุบัน ได้ทรงสืบสาน รักษา และต่อยอด โครงการอันเนื่องมาจากพระราชดำริในหลายด้านอย่างสม่ำเสมอตามพระบรมราโชบายพระบาทสมเด็จพระเจ้าอยู่หัว จนเกิดผลสำเร็จเป็นรูปธรรมต่อคุณภาพชีวิตของประชาชนในพื้นที่ต่าง ๆ ทั่วประเทศ งานพัฒนาดังกล่าวครอบคลุมทั้งด้านการศึกษา โภชนาการ สาธารณสุข การอนุรักษ์ทรัพยากรธรรมชาติ การส่งเสริมอาชีพ ตลอดจนการประยุกต์ใช้วิทยาศาสตร์และเทคโนโลยีเพื่อขยายโอกาสให้แก่ประชาชน โดยมีเป้าหมายสำคัญคือการยกระดับคุณภาพชีวิต และเสริมความเข้มแข็งให้ชุมชนสามารถพึ่งพาตนเองได้อย่างมั่นคงและยั่งยืน</p>
+                </div>
+            </div>
+            
+            <div class="desc-box-full">
+                <p>การทรงงานด้านการพัฒนาได้ยึดหลักความเข้าใจบริบทของพื้นที่ การรับฟังปัญหาอย่างรอบด้าน และการมีส่วนร่วมของประชาชนในทุกขั้นตอน โครงการต่าง ๆ จึงมิได้มุ่งเพียงแก้ไขปัญหาเฉพาะหน้า หากแต่เน้นการวางรากฐานและสร้างกระบวนการเรียนรู้ที่ต่อเนื่องเพื่อผลในระยะยาว การส่งเสริมให้โรงเรียนสามารถผลิตอาหารกลางวันได้เอง การพัฒนาระบบน้ำสะอาดในพื้นที่ทุรกันดาร การจัดตั้งศูนย์เรียนรู้และศูนย์พัฒนาต่าง ๆ รวมถึงการสนับสนุนอาชีพที่เหมาะสมกับภูมิสังคม ล้วนสะท้อนแนวทางการพัฒนาที่คำนึงถึงความยั่งยืนมากกว่าความสำเร็จระยะสั้น</p>
+            </div>
+
+            <div class="emblem-bottom-center">
+                <div class="emblem-box">
+                    <img src="images1/emblem.png" alt="ตราสัญลักษณ์" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="nav-links">
+            <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
+            
+            <a href="board1.html">บอร์ด 1</a>
+            <a href="board2.html">บอร์ด 2</a>
+            <a href="board3.html">บอร์ด 3</a>
+            <a href="board4.html">บอร์ด 4</a>
+            <a href="board5.html">บอร์ด 5</a>
+            <a href="board6.html">บอร์ด 6</a>
+            <a href="board7.html">บอร์ด 7</a>
+            <a href="board8.html">บอร์ด 8</a>
+            <a href="board9.html">บอร์ด 9</a>
+        </div>
+    </footer>
+
+    <div class="copyright-section">
+        <div class="copyright-text">
+            สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)<br>
+            เลขที่ 2012 ซอยอรุณอมรินทร์ 36 ถนนอรุณอมรินทร์ แขวงบางยี่ขัน เขตบางพลัด กรุงเทพฯ 10700
+        </div>
+        <div>
+            <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:white; margin-right:8px; vertical-align:middle;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                ติดตามข้อมูลโครงการ กปร.
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
