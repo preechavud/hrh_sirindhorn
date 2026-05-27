@@ -42,7 +42,7 @@
         }
 
         /* -----------------------------------------------
-           STYLE: กรอบรูปโลหะเงินเงา คุมธีมระบบบอร์ดน้า
+           [แก้ไข] STYLE: กรอบรูปโลหะเงินเงา คุมธีมระบบบอร์ดภาพจริงดันขอบ
         -------------------------------------------------- */
         .img-frame {
             background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
@@ -51,34 +51,39 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
             border-radius: 2px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
             position: relative;
         }
 
+        /* [แก้ไข] ให้รูปภาพจริงกางดันกรอบ ขอบเงินจะแนบเข้าพอดีกับขอบรูป */
         .img-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
+            height: auto;
+            position: relative;
             z-index: 3;
         }
 
+        /* จัดตำแหน่งตัวหนังสือรหัสรูปจำลองให้อยู่กึ่งกลางสัดส่วนภาพจริง */
         .placeholder-info {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
             padding: 10px;
+            width: 100%;
+            pointer-events: none;
         }
         .placeholder-info b { color: #ffeb3b; font-size: 1.05rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
-        .placeholder-dim { color: #a2f2a2; font-size: 0.8rem; font-weight: 600; display: block; margin-top: 3px; }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.8rem; font-weight: 600; display: block; margin-top: 3px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-        /* การตั้งค่า Grid จัดวางภาพขนาดต่างๆ */
+        /* [แก้ไข] ถอดค่าความสูงแบบ Fix ออกจากทุกส่วนผังจัดวาง */
         .main-horizontal-frame {
             width: 100%;
-            height: 700px;
             margin-bottom: 25px;
         }
 
@@ -89,24 +94,20 @@
             margin-bottom: 25px;
         }
 
-        .pair-height {
-            height: 380px;
-        }
-
         /* -----------------------------------------------
-           NEW STYLE: โครงสร้างกรอบกลุ่มแบบวาง 3 รูป
+           [แก้ไข] NEW STYLE: โครงสร้างผังจัดวางกลุ่มภาพแบบอัตโนมัติ 
         -------------------------------------------------- */
         /* แบบที่ 1: ซ้ายนอน 2 รูป / ขวาตั้ง 1 รูป */
         .grid-3-layout-left-horizontal {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 25px;
-            height: 600px;
             margin-bottom: 25px;
+            align-items: start;
         }
         .sub-left-stack {
             display: grid;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: auto auto;
             gap: 20px;
         }
 
@@ -115,12 +116,12 @@
             display: grid;
             grid-template-columns: 1fr 1.2fr;
             gap: 25px;
-            height: 600px;
             margin-bottom: 25px;
+            align-items: start;
         }
         .sub-right-stack {
             display: grid;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: auto auto;
             gap: 20px;
         }
 
@@ -173,11 +174,11 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .img-pair-row, .grid-3-layout-left-horizontal, .grid-3-layout-left-vertical { grid-template-columns: 1fr; height: auto; }
+            .img-pair-row, .grid-3-layout-left-horizontal, .grid-3-layout-left-vertical { grid-template-columns: 1fr; }
             .sub-left-stack, .sub-right-stack { gap: 15px; }
-            .pair-height, .grid-3-layout-left-horizontal .img-frame, .grid-3-layout-left-vertical .img-frame { height: 280px; }
-            .main-horizontal-frame { height: 300px; }
             .main-heading-title { font-size: 2.2rem; }
+            .board-container { padding: 20px; }
+            .board-inner-border { padding: 20px 15px; }
         }
     </style>
 </head>
@@ -233,7 +234,7 @@
 งานพิพิธภัณฑ์ ประวัติศาสตร์ และโบราณสถาน</p>
             </div>
 
-            <div class="img-pair-row pair-height">
+            <div class="img-pair-row">
                 <div class="img-frame">
                     <div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images6/img4.jpg" onerror="this.style.display='none';">
@@ -251,7 +252,7 @@
 </p>
             </div>
 
-            <div class="img-pair-row pair-height">
+            <div class="img-pair-row">
                 <div class="img-frame">
                     <div class="placeholder-info"><b>img6.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images6/img6.jpg" onerror="this.style.display='none';">
@@ -288,10 +289,10 @@
 
             <div class="desc-box-auto">
                 <p>
-พ.ศ. ๒๕๒๘ รัฐบาลได้ประกาศให้วันที่ ๒ เมษายน ของทุกปี ซึ่งเป็นวันคล้ายวันพระราชสมภพของสมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา สยามบรมราชกุมารี เป็น “วันอนุรักษ์มรดกไทย” ด้วยตระหนักในพระปรีชาสามารถ และพระมหากรุณาที่ทรงสนับสนุนกิจกรรมในด้านศิลปวัฒนธรรมของประเทศชาติเสมอมา</p>
+    พ.ศ. ๒๕๒๘ รัฐบาลได้ประกาศให้วันที่ ๒ เมษายน ของทุกปี ซึ่งเป็นวันคล้ายวันพระราชสมภพของสมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา สยามบรมราชกุมารี เป็น “วันอนุรักษ์มรดกไทย” ด้วยตระหนักในพระปรีชาสามารถ และพระมหากรุณาที่ทรงสนับสนุนกิจกรรมในด้านศิลปวัฒนธรรมของประเทศชาติเสมอมา</p>
             </div>
 
-            <div class="img-pair-row pair-height">
+            <div class="img-pair-row">
                 <div class="img-frame">
                     <div class="placeholder-info"><b>img11.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images6/img11.jpg" onerror="this.style.display='none';">
@@ -310,7 +311,7 @@
 
             <div class="emblem-center">
                 <div class="emblem-box">
-                    <img src="images6/emblem.png" onerror="this.style.display='none';">
+                    <img src="images6/emblem.png" alt="Royal Emblem" onerror="this.style.display='none';">
                 </div>
             </div>
 
@@ -320,13 +321,12 @@
     <footer>
         <div class="nav-links">
             <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
-            
             <a href="board1.html">บอร์ด 1</a>
             <a href="board2.html">บอร์ด 2</a>
             <a href="board3.html">บอร์ด 3</a>
             <a href="board4.html">บอร์ด 4</a>
             <a href="board5.html">บอร์ด 5</a>
-            <a href="board6.html">บอร์ด 6</a>
+            <a href="board6.html" class="active">บอร์ด 6</a>
             <a href="board7.html">บอร์ด 7</a>
             <a href="board8.html">บอร์ด 8</a>
             <a href="board9.html">บอร์ด 9</a>
