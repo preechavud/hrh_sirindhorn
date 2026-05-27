@@ -41,7 +41,9 @@
             height: 100%;
         }
 
-        /* STYLE: กรอบรูปโลหะเงินเงา */
+        /* -----------------------------------------------
+           [แก้ไข] STYLE: กรอบรูปโลหะเงินเงา ระบบภาพจริงดันขอบ
+        -------------------------------------------------- */
         .img-frame {
             background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
             border: 1px solid #e0e0e0;
@@ -49,32 +51,38 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
             border-radius: 2px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
             position: relative;
             margin-bottom: 25px;
         }
 
+        /* [แก้ไข] ให้รูปภาพดันขอบกรอบเงินออกมา ขอบจะกระชับพอดีกับภาพตลอดเวลา */
         .img-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
+            height: auto;
+            position: relative;
             z-index: 3;
         }
 
+        /* จัดตำแหน่งข้อความจำลองให้อยู่กึ่งกลางสัดส่วนภาพจริง */
         .placeholder-info {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
             padding: 15px;
+            width: 100%;
+            pointer-events: none;
         }
         .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
-        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-        /* การจัดแถวภาพแบบต่างๆ */
+        /* การจัดแถวภาพแบบต่างๆ (ถอดค่าความสูงแบบฟิกซ์ออกทั้งหมด) */
         .img-pair-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -83,15 +91,15 @@
         }
 
         .single-vertical-frame {
+            display: block;
             width: 100%;
             max-width: 480px;
-            height: 680px;
             margin: 0 auto 30px;
         }
 
         .single-horizontal-frame {
+            display: block;
             width: 100%;
-            height: 400px;
             margin-bottom: 30px;
         }
 
@@ -143,7 +151,8 @@
         @media (max-width: 768px) {
             .img-pair-row { grid-template-columns: 1fr; }
             .main-heading-title { font-size: 2.2rem; }
-            .single-vertical-frame { height: 500px; }
+            .board-container { padding: 20px; }
+            .board-inner-border { padding: 20px 15px; }
         }
     </style>
 </head>
@@ -165,11 +174,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img1.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img1.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img2.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img2.jpg" onerror="this.style.display='none';">
                 </div>
@@ -184,22 +193,22 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img4.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img5.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img5.jpg" onerror="this.style.display='none';">
                 </div>
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img6.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img6.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img7.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img7.jpg" onerror="this.style.display='none';">
                 </div>
@@ -222,11 +231,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img8.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img8.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img9.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img9.jpg" onerror="this.style.display='none';">
                 </div>
@@ -239,11 +248,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img10.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img10.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img11.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img11.jpg" onerror="this.style.display='none';">
                 </div>
@@ -259,11 +268,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img12.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img12.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 380px;">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img13.jpg</b><span class="placeholder-dim">550 x 380 px</span></div>
                     <img src="images5/img13.jpg" onerror="this.style.display='none';">
                 </div>
@@ -294,7 +303,7 @@
             <a href="board2.html">บอร์ด 2</a>
             <a href="board3.html">บอร์ด 3</a>
             <a href="board4.html">บอร์ด 4</a>
-            <a href="board5.html">บอร์ด 5</a>
+            <a href="board5.html" class="active">บอร์ด 5</a>
             <a href="board6.html">บอร์ด 6</a>
             <a href="board7.html">บอร์ด 7</a>
             <a href="board8.html">บอร์ด 8</a>
