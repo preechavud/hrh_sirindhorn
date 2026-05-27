@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บอร์ดที่ 2 - พระราชประวัติ (32 เหตุการณ์สำคัญ)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .board-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px;
+            position: relative;
+        }
+
+        .board-inner-border {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 30px 25px;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ------------------------------------------------------------------
+           [Top Section] โครงสร้างส่วนบน ผูกขนาดความสูงฝั่งซ้ายตามภาพใหญ่ขวา
+        ------------------------------------------------------------------ */
+        .top-section {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .left-column-layout {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .royal-header {
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+        }
+
+        .left-images-container {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sub-row-top {
+            flex: 1.2;
+            display: flex;
+        }
+
+        .sub-row-bottom-grid {
+            flex: 0.8;
+            display: grid;
+            grid-template-columns: 2fr 1fr; 
+            gap: 15px;
+        }
+
+        .right-column-layout {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ------------------------------------------------------------------
+           [การจัดการรูปภาพและการซ่อนข้อความจำลองเบื้องหลัง]
+        ------------------------------------------------------------------ */
+        .img-box-wide, 
+        .img-box-gallery,
+        .main-royal-img-box,
+        .img-box-square-timeline,
+        .img-box-auto-timeline {
+            background-color: #3f2849;
+            background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
+            border: 1px solid #e0e0e0;
+            outline: 1px solid #7a7a7a;
+            box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3);
+            border-radius: 2px;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* ใช้ CSS pseudo-element สร้างตัวหนังสือจำลองขึ้นมาเบื้องหลัง (ถ้าไม่มีรูปภาพจะเห็นสิ่งนี้) */
+        .img-box-wide::before,
+        .img-box-gallery::before,
+        .main-royal-img-box::before,
+        .img-box-square-timeline::before,
+        .img-box-auto-timeline::before {
+            content: attr(data-file);
+            position: absolute;
+            z-index: 1;
+            color: #ffeb3b;
+            font-size: 0.85rem;
+            font-weight: bold;
+            opacity: 0.4;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* จัดสัดส่วนกรอบรูปภาพหลัก */
+        .main-royal-img-box {
+            border: 2px solid #f0f0f0;
+            box-shadow: 0 0 0 2px #ffffff, 0 8px 24px rgba(0,0,0,0.4);
+            aspect-ratio: 3 / 4;
+        }
+
+        /* จัดสัดส่วนกรอบภาพในไทม์ไลน์ (แบบปกติที่เป็นสี่เหลี่ยมจัตุรัส) */
+        .timeline-detail .img-box-square-timeline {
+            margin: 15px 0;
+            aspect-ratio: 1 / 1; 
+        }
+
+        /* [เพิ่มจุดแก้ไขพิเศษ] กรอบภาพสำหรับภาพสัดส่วนธรรมชาติ ไม่บังคับจัตุรัส */
+        .timeline-detail .img-box-auto-timeline {
+            margin: 15px 0;
+            height: auto;
+            max-height: 400px; /* จำกัดความสูงสูงสุดเพื่อความสวยงามในไทม์ไลน์ */
+        }
+
+        /* บังคับสไตล์ของแท็กรูปภาพจริงทั้งหมดให้ขึ้นมาคลุมทับ */
+        .top-section img,
+        .timeline-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 2; /* ทับตัวอักษรจำลองด้านล่างเสมอ */
+            background-color: #35233d; /* ถมสีพื้นหลังที่ตัวภาพเพื่อกันตัวหนังสือทะลุซ้อน */
+        }
+
+        /* สำหรับกรอบภาพสัดส่วนธรรมชาติ ให้แสดงผลตามขนาดจริง ไม่จัดแบบ absolute คลุม */
+        .timeline-detail .img-box-auto-timeline img {
+            position: relative;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* แยกส่วนของ Object-fit ตามความต้องการเดิม */
+        .main-royal-img-box img,
+        .img-box-square-timeline img {
+            object-fit: cover;
+        }
+        .img-box-wide img, 
+        .img-box-gallery img {
+            object-fit: contain;
+        }
+
+        /* หัวข้อและคำบรรยาย */
+        .middle-title-section {
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            margin-top: 25px;
+        }
+
+        .middle-title-section h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .desc-box-auto {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .desc-box-auto p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        /* ------------------------------------------------------------------
+           Infographic Timeline สไตล์ 2 คอลัมน์
+        ------------------------------------------------------------------ */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 1100px;
+            margin: 40px auto 50px;
+            padding: 10px 0;
+        }
+
+        .timeline-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ffffff;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .timeline-container {
+            position: relative;
+            background-color: transparent;
+            width: 50%;
+            padding: 15px 40px;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: #ffeb3b;
+            border: 3px solid #5d4668;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 0 3px #ffffff;
+            top: 42px; 
+        }
+
+        .timeline-left { left: 0; }
+        .timeline-left::after { right: -10px; }
+        .timeline-right { left: 50%; }
+        .timeline-right::after { left: -10px; }
+
+        .timeline-content {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .timeline-year {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffeb3b;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .timeline-detail {
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+        .timeline-detail p { margin-bottom: 12px; }
+        .timeline-detail p:last-child { margin-bottom: 0; }
+        .timeline-detail p b { color: #ffeb3b; font-size: 1.1rem; }
+
+        .emblem-bottom-center { display: flex; justify-content: center; align-items: center; padding-bottom: 10px; margin-top: 30px; }
+        .emblem-box { width: 130px; height: 160px; display: flex; align-items: center; justify-content: center; }
+        .emblem-box img { width: 100%; height: 100%; object-fit: contain; display: block; position: relative; z-index: 2; }
+
+        footer { background-color: #2c1933; width: 100%; padding: 25px 10px; text-align: center; border-top: 2px solid #a589b4; margin-top: 40px; }
+        .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .nav-links a { display: inline-block; padding: 8px 16px; background-color: #432a4e; color: #ffffff; text-decoration: none; font-size: 0.9rem; border-radius: 4px; border: 1px solid #71527e; }
+        .nav-links a.active { background-color: #ffffff; color: #2c1933; font-weight: 600; }
+
+        .copyright-section { background-color: #1a0f21; width: 100%; padding: 25px 20px; text-align: center; color: #dcdcdc; font-size: 0.82rem; line-height: 1.6; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: 600; margin-top: 15px; font-size: 0.8rem; }
+
+        /* Responsive UI */
+        @media (max-width: 992px) {
+            .top-section { flex-direction: column; gap: 20px; }
+            .royal-header { text-align: center; }
+            .main-royal-img-box { max-width: 500px; margin: 0 auto; }
+            .sub-row-top { min-height: 220px; }
+            .sub-row-bottom-grid { min-height: 120px; }
+        }
+        @media (max-width: 768px) {
+            .board-container { padding: 20px; }
+            .board-inner-border { padding: 20px 15px; }
+            .middle-title-section h2 { font-size: 2.2rem; }
+            .sub-row-bottom-grid { gap: 10px; }
+            
+            .timeline-wrapper::after { left: 31px; }
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 15px; }
+            .timeline-container::after { left: 21px; right: auto; top: 40px; }
+            .timeline-right { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <div class="board-inner-border">
+            
+            <div class="top-section">
+                <div class="left-column-layout">
+                    <div class="royal-header">
+                        สมเด็จพระกนิษฐาธิราชเจ้า<br>
+                        กรมสมเด็จพระเทพรัตนราชสุดา ฯ<br>
+                        สยามบรมราชกุมารี
+                    </div>
+                    
+                    <div class="left-images-container">
+                        <div class="sub-row-top">
+                            <div class="img-box-wide" data-file="img1.jpg">
+                                <img src="images2/img1.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                        
+                        <div class="sub-row-bottom-grid">
+                            <div class="img-box-gallery" data-file="img3.jpg">
+                                <img src="images2/img3.jpg" onerror="this.style.display='none';">
+                            </div>
+                            <div class="img-box-gallery" data-file="img4.jpg">
+                                <img src="images2/img4.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column-layout">
+                    <div class="main-royal-img-box" data-file="main.jpg">
+                        <img src="images2/main.jpg" onerror="this.style.display='none';">
+                    </div>
+                </div>
+            </div>
+
+            <div class="middle-title-section">
+                <h2>พระราชประวัติ</h2>
+            </div>
+
+            <div class="desc-box-auto" style="margin-bottom: 25px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p style="font-size: 1.3rem; font-weight: 600;">สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา เจ้าฟ้ามหาจักรีสิรินธร มหาวชิราลงกรณวรราชภักดี</p>
+                    <p style="font-size: 1.3rem; font-weight: 600;">สิริกิจการิณีพีรยพัฒน รัฐสีมาคุณากรปิยชาติ สยามบรมราชกุมารี</p>
+                </div>
+                
+                <p style="text-indent: 2.5em; margin-bottom: 15px;">ทรงเสด็จพระราชสมภพ เมื่อวันที่ ๒ เมษายน พุทธศักราช ๒๔๙๘ ณ พระที่นั่งอัมพรสถาน พระราชวังดุสิต เป็นพระราชธิดาในพระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร และ สมเด็จพระนางเจ้าสิริกิติ์ พระบรมราชินีนาถ พระบรมราชชนนีพันปีหลวง ได้รับพระราชทานพระนามว่า</p>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <p style="font-size: 1.3rem; font-weight: 600; color: #ffeb3b; text-shadow: 1px 1px 2px rgba(0,0,0,0.4);">สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าสิรินธรเทพรัตนสุดา กิติวัฒนาดุลโสภาคย์</p>
+                </div>
+                
+                <p style="text-indent: 2.5em; margin-bottom: 15px;">พร้อมทั้งประทานคำแปลว่า “นางแก้ว” อันหมายถึงหญิงผู้ประเสริฐ และทรงมีพระนามลำลองในครอบครัวว่า “ทูลกระหม่อมน้อย” ซึ่งแสดงถึงความรัก ความสนิทสนมที่พระราชวงศ์มีต่อพระองค์ ทรงมีพระโสธรเชษฐภคินี ๑ พระองค์ คือ ทูลกระหม่อมหญิงอุบลรัตนราชกัญญา สิริวัฒนาพรรณวดี มีพระโสธรเชษฐา ๑ พระองค์ คือ พระบาทสมเด็จพระเจ้าอยู่หัว และมีพระขนิษฐา ๑ พระองค์ คือสมเด็จพระเจ้าน้องนางเธอ เจ้าฟ้าจุฬาภรณวลัยลักษณ์ อัครราชกุมารี กรมพระศรีสวางควัฒน วรขัตติยราชนารี</p>
+                <p style="text-indent: 2.5em; margin-bottom: 15px;">ทรงเจริญพระชนมพรรษาท่ามกลางพระราชวงศ์ที่เปี่ยมไปด้วยคุณธรรมและความเมตตาต่อพสกนิกร จึงมีพระราชจริยวัตรที่เปี่ยมไปด้วยความสุภาพอ่อนโยน และในขณะเดียวกันก็ทรงพระวิริยอุตสาหะในการประกอบพระราชกรณียกิจนานัปการอย่างมุ่งมั่น ไม่ย่อท้อต่อความลำบาก ทรงได้รับการอบรมดูแลอย่างใกล้ชิดจากสมเด็จพระบรมชนกนาถ และสมเด็จพระบรมราชชนนีพันปีหลวง ในการพัฒนาคุณภาพชีวิตราษฎรให้ดีขึ้นมาโดยตลอด</p>
+            </div>
+
+            <div class="timeline-wrapper">
+                
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๔๙๘</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๔๙๘</b> พระราชสมภพ ณ พระที่นั่งอัมพรสถาน พระราชวังดุสิต</p>
+                            <div class="img-box-square-timeline" data-file="2498.jpg">
+                                <img src="images2/2498.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๐๑ - ๒๕๑๑</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๐๑</b> ทรงเริ่มศึกษาระดับอนุบาล ที่ ร.ร.จิตรลดา</p>
+                            <p><b>๒๕๑๐</b> ทรงสำเร็จการศึกษาระดับประถมฯ คะแนนอันดับ ๑ ของประเทศ</p>
+                            <p><b>๒๕๑๑</b> ทรงเริ่มศึกษาระดับมัธยม ที่ ร.ร.จิตรลดา</p>
+                            <div class="img-box-square-timeline" data-file="2511.jpg">
+                                <img src="images2/2511.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๑๕ - ๒๕๒๐</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๑๕</b> ทรงสอบ ม.๕ แผนกศิลป์ ได้ที่ ๑ ของประเทศ (๘๙.๓%)</p>
+                            <p><b>๒๕๑๖</b> ทรงเริ่มศึกษาคณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย</p>
+                            <p><b>๒๕๒๐</b> ทรงสำเร็จการศึกษาอักษรศาสตร์บัณฑิต สาขาประวัติศาสตร์ (เกียรตินิยมอันดับ ๑) จุฬาลงกรณ์มหาวิทยาลัย</p>
+                            <div class="img-box-auto-timeline" data-file="2520-1.jpg">
+                                <img src="images2/2520-1.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๒๐ (สภากาชาดไทย)</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๒๐</b> ทรงดำรงตำแหน่งอุปนายิกาผู้อำนวยการสภากาชาดไทย</p>
+                            <div class="img-box-square-timeline" data-file="2520-2.jpg">
+                                <img src="images2/2520-2.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๒๐ (สถาปนาพระอิสริยศักดิ์)</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๒๐</b> พระราชพิธีสถาปนาพระอิสริยศักดิ์ในการพระราชพิธีเฉลิมพระชนมพรรษา</p>
+                            <div class="img-box-square-timeline" data-file="2520-3.jpg">
+                                <img src="images2/2520-3.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๒๑ - ๒๕๒๙</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๒๑</b> ทรงเริ่มศึกษาปริญญาโทที่จุฬาฯ และศิลปากร พร้อมกัน</p>
+                            <p><b>๒๕๒๓</b> ทรงเริ่มโครงการเกษตรเพื่ออาหารกลางวัน</p>
+                            <p><b>๒๕๒๙</b> ทรงสำเร็จการศึกษาระดับปริญญาดุษฎีบัณฑิต สาขาพัฒนศึกษาศาสตร์ มหาวิทยาลัยศรีนครินทรวิโรฒ (มศว.)</p>
+                            <div class="img-box-square-timeline" data-file="2529.jpg">
+                                <img src="images2/2529.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๓๑ (มูลนิธิชัยพัฒนา)</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๓๑</b> ทรงดำรงตำแหน่งองค์ประธาน กรรมการมูลนิธิชัยพัฒนา</p>
+                            <div class="img-box-square-timeline" data-file="2531.jpg">
+                                <img src="images2/2531.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๓๑ - ๒๕๓๗</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๓๑</b> ทรงเริ่มดำเนินงานโครงการนักเรียนในพระราชานุเคราะห์ฯ</p>
+                            <p><b>๒๕๓๓</b> ทรงเริ่มโครงการควบคุมโรคขาดสารไอโอดีน และเสด็จฯ เยือน สปป.ลาว ครั้งแรก</p>
+                            <p><b>๒๕๓๔</b> ทรงจัดตั้งกองทุนพัฒนาเด็กและเยาวชนในถิ่นทุรกันดาร (กพด.)</p>
+                            <p><b>๒๕๓๕</b> ทรงเริ่มโครงการอนุรักษ์พันธุกรรมพืช</p>
+                            <p><b>๒๕๓๗</b> ทรงเริ่มโครงการปลูกป่าชายเลนที่ จ. เพชรบุรี และพระราชทานนามนกสายพันธุ์ใหม่ ว่า “นกเจ้าฟ้าหญิงสิรินธร”</p>
+                            <div class="img-box-square-timeline" data-file="2537.jpg">
+                                <img src="images2/2537.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๓๘ (อุทยานธรรมชาติวิทยาฯ)</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๓๘</b> ทรงเริ่มโครงการอุทยานธรรมชาติวิทยาฯ ตามพระราชดำริฯ</p>
+                            <div class="img-box-square-timeline" data-file="2538.jpg">
+                                <img src="images2/2538.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๓๘ - ๒๕๔๒</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๓๘</b> ทรงเริ่มโครงการเทคโนโลยีสารสนเทศฯ</p>
+                            <p><b>๒๕๔๒</b> ทรงจัดตั้งศูนย์ภูฟ้าพัฒนา จังหวัดน่าน เพื่อยกระดับคุณภาพชีวิตราษฎร</p>
+                            <div class="img-box-square-timeline" data-file="2542.jpg">
+                                <img src="images2/2542.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๕๓ - ๒๕๕๗</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๕๓</b> ทรงเริ่มโครงการศูนย์พัฒนาพันธุ์สัตว์ อำเภอด่านซ้าย จังหวัดเลย</p>
+                            <p><b>๒๕๕๔</b> ทรงเริ่มโครงการครูป่าไม้</p>
+                            <p><b>๒๕๕๖</b> ทรงเริ่มโครงการสร้างป่า สร้างรายได้</p>
+                            <p><b>๒๕๕๗</b> ทรงเปิดศูนย์กสิกรรม-ป่าไม้ หนองเต่า สปป.ลาว</p>
+                            <div class="img-box-square-timeline" data-file="2557.jpg">
+                                <img src="images2/2557.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๕๙ - ๒๕६๒</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๕๙</b> ทรงเริ่มโครงการทหารพันธุ์ดี</p>
+                            <p><b>๒๕๖๑</b> ทรงเริ่มโครงการน้ำดื่มสะอาดในโรงเรียนตำรวจตระเวนชายแดน</p>
+                            <p><b>๒๕๖๒</b> พระราชพิธีเฉลิมพระนามาภิไธย ในการพระราชพิธีบรมราชาภิเษก พุทธศักราช ๒๕๖๒</p>
+                            <div class="img-box-square-timeline" data-file="2562.jpg">
+                                <img src="images2/2562.jpg" onerror="this.style.display='none';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-container timeline-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">พ.ศ. ๒๕๖๓ - ปัจจุบัน</div>
+                        <div class="timeline-detail">
+                            <p><b>๒๕๖๓</b> เสด็จฯ ติดตามการดำเนินงาน รร. ตชด. เป็นครั้งที่ ๑,๐๐๐</p>
+                            <div class="img-box-square-timeline" data-file="2563.jpg">
+                                <img src="images2/2563.jpg" onerror="this.style.display='none';">
+                            </div>
+                            <p><b>๒๕๖๓</b> ทรงตั้งศูนย์ผลิตพันธุ์สัตว์พระราชทาน ปากพนัง จ.นครศรีธรรมราช</p>
+                            <p><b>ปัจจุบัน</b> ทรงติดตามการดำเนินงานศูนย์สาขาของศูนย์ศึกษาการพัฒนาฯ สม่ำเสมอ</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="emblem-bottom-center">
+                <div class="emblem-box"><img src="images2/emblem.png" onerror="this.style.display='none';"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="nav-links">
+            <a href="index.html">หน้าแรก</a>
+            <a href="board1.html">บอร์ด 1</a>
+            <a href="board2.html" class="active">บอร์ด 2</a>
+            <a href="board3.html">บอร์ด 3</a>
+            <a href="board4.html">บอร์ด 4</a>
+            <a href="board5.html">บอร์ด 5</a>
+            <a href="board6.html">บอร์ด 6</a>
+            <a href="board7.html">บอร์ด 7</a>
+            <a href="board8.html">บอร์ด 8</a>
+            <a href="board9.html">บอร์ด 9</a>
+        </div>
+    </footer>
+
+    <div class="copyright-section">
+        <div class="copyright-text">
+            สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)<br>
+            เลขที่ 2012 ซอยอรุณอมรินทร์ 36 ถนนอรุณอมรินทร์ แขวงบางยี่ขัน เขตบางพลัด กรุงเทพฯ 10700
+        </div>
+        <div>
+            <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:white; margin-right:8px; vertical-align:middle;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                ติดตามข้อมูลโครงการ กปร.
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
