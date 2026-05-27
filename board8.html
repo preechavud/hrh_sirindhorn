@@ -40,16 +40,18 @@
             width: 100%;
         }
 
+        /* หัวเรื่องใหญ่ประจำบอร์ดบนสุด */
         .main-heading {
             font-size: 3.5rem;
             font-weight: 700;
             text-align: center;
-            margin: 35px 0 40px;
+            margin: 20px 0 40px;
             color: #ffffff;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
             line-height: 1.2;
         }
 
+        /* [แก้ไข] ปรับโครงสร้างกรอบภาพโลหะเงินเงา ให้ยึดขนาดกระชับพอดีตามรูปภาพจริงด้านใน */
         .img-frame {
             background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
             border: 1px solid #e0e0e0;
@@ -57,21 +59,20 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
             border-radius: 2px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
             position: relative;
         }
 
+        /* [แก้ไข] ให้รูปภาพดันขอบกรอบเงินออกมา กรอบจะแนบสนิทเข้ากับขอบภาพตลอดเวลา */
         .img-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 3;
+            height: auto;
         }
 
+        /* ระบบจัดวางภาพแนวนอนแบบคู่ */
         .image-double-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -79,15 +80,58 @@
             margin-bottom: 35px;
         }
 
+        /* ข้อมูลรายละเอียดขนาดและรหัสภาพจำลองในกรอบ */
         .placeholder-info {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
             padding: 15px;
+            width: 100%;
+            pointer-events: none;
         }
-        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
-        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
+        /* จัดตำแหน่ง Layer ให้ข้อความอยู่ใต้ภาพกรณีภาพโหลดเสร็จ */
+        .img-frame img { position: relative; z-index: 2; }
+
+        /* กรอบข้อความอัญเชิญพระราชดำรัส (กล่องสไตล์หรูหราแบบเดิมคงไว้) */
+        .royal-quote-box {
+            background: linear-gradient(135deg, #efe5f5 0%, #f7f1fa 100%);
+            border-left: 6px solid #ffeb3b;
+            border-right: 6px solid #ffeb3b;
+            padding: 35px 40px;
+            margin: 40px auto;
+            max-width: 950px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25), inset 0 0 15px rgba(255,255,255,0.6);
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .royal-quote-box p {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #35233d;
+            text-align: justify;
+            text-indent: 2.5em;
+            font-weight: 500;
+        }
+
+        .royal-quote-box .quote-source {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            color: #5d4668;
+            text-align: right;
+            margin-top: 20px;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        /* กรอบข้อความยืดอัตโนมัติรอบรับเนื้อหาผันแปร */
         .desc-box-auto {
             background: rgba(255, 255, 255, 0.12);
             padding: 25px 30px;
@@ -105,53 +149,7 @@
             text-indent: 2.5em;
         }
 
-        /* 👑 ปรับปรุงส่วนกรอบพระราชดำรัสตามสั่ง */
-        .royal-speech-box {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.75) 60%);
-            border-left: 6px solid #ffffff; /* เปลี่ยนขอบซ้ายเป็นสีขาวตามสั่ง */
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 35px 40px;
-            margin-bottom: 35px;
-            border-radius: 0 6px 6px 0;
-            box-shadow: 0 6px 22px rgba(0,0,0,0.2);
-            height: auto;
-            position: relative;
-        }
-
-        .royal-speech-box::before {
-            content: '“';
-            position: absolute;
-            top: 5px;
-            left: 15px;
-            font-size: 4rem;
-            color: rgba(93, 70, 104, 0.15); /* อิงสีพื้นหลังบอร์ด */
-            font-family: 'Charm', serif;
-            line-height: 1;
-        }
-
-        .royal-speech-box p {
-            font-family: 'Charm', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            line-height: 1.7;
-            color: #3b214c; /* เปลี่ยนอักษรพระราชดำรัสเป็นสีม่วงเข้มตามสั่ง */
-            text-shadow: none;
-            text-align: center;
-            text-indent: 0;
-        }
-
-        .royal-speech-box .speech-source {
-            font-family: 'Sarabun', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #553e63; /* ปรับสีแหล่งที่มาให้เข้าชุดกัน */
-            text-align: right;
-            margin-top: 15px;
-            display: block;
-        }
-
+        /* ส่วนตราสัญลักษณ์ท้ายเนื้อหาบอร์ด */
         .emblem-center {
             display: flex;
             justify-content: center;
@@ -160,6 +158,7 @@
         .emblem-box { width: 140px; height: 175px; }
         .emblem-box img { width: 100%; height: 100%; object-fit: contain; }
 
+        /* FOOTER NAVIGATION */
         footer { background-color: #2c1933; width: 100%; padding: 25px 10px; text-align: center; border-top: 2px solid #a589b4; margin-top: 40px; }
         .nav-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
         .nav-links a { padding: 8px 16px; background-color: #432a4e; color: #ffffff; text-decoration: none; font-size: 0.9rem; border-radius: 4px; border: 1px solid #71527e; }
@@ -167,10 +166,12 @@
         .copyright-section { background-color: #1a0f21; width: 100%; padding: 25px 20px; text-align: center; color: #dcdcdc; font-size: 0.85rem; line-height: 1.6; border-top: 1px solid rgba(255, 255, 255, 0.1); }
         .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 8px 18px; border-radius: 20px; font-weight: 600; margin-top: 15px; font-size: 0.8rem; }
 
+        /* Responsive Breakpoints */
         @media (max-width: 768px) {
             .image-double-row { grid-template-columns: 1fr; gap: 20px; }
+            .royal-quote-box { padding: 25px 20px; }
+            .royal-quote-box p { font-size: 1.05rem; text-indent: 1.5em; }
             .main-heading { font-size: 2.2rem; }
-            .royal-speech-box p { font-size: 1.40rem; }
             .board-container { padding: 20px; }
             .inner-canvas { padding: 20px 15px; }
         }
@@ -181,144 +182,85 @@
     <div class="board-container">
         <div class="inner-canvas">
 
-            <div class="img-frame" style="width: 100%; max-width: 540px; height: 750px; margin: 0 auto 35px;">
-                <div class="placeholder-info">
-                    <b>hero_vertical.jpg</b>
-                    <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้งเดี่ยว)</span>
-                </div>
-                <img src="images8/hero_vertical.jpg" onerror="this.style.display='none';">
+            <div class="main-heading">
+                ประมวลพระราชดำรัสและแนวพระราชดำริ
             </div>
 
-            <div class="royal-speech-box">
+            <div class="img-frame" style="margin-top: 15px; display: block;">
+                <img src="images8/hero_vertical.jpg" onerror="this.style.display='none';">
+                <div class="placeholder-info">
+                    <b>hero_vertical.jpg</b>
+                    <span class="placeholder-dim">ขนาดแนะนำ: 1100 x 600 px (ภาพสัดส่วนพาโนรามา)</span>
+                </div>
+            </div>
+
+            <div class="royal-quote-box">
                 <p>
-“…งานที่ทำนั้น ถ้าเรียกโดยสรุปตามภาษาสมัยใหม่เขาเรียกว่าการพัฒนาทรัพยากรมนุษย์ แต่ที่จริงก็คือ ให้คนทั้งหลายได้มีโอกาสเจริญเติบโต มีชีวิตที่มีสุขภาพแข็งแรงทั้งร่างกาย และจิตใจ ได้รับการศึกษา ฝึกอบรมสั่งสอนเพื่อให้มีความรู้ และ พัฒนาความสามารถ ทั้งคุณงามความดีที่จะปฏิบัติงาน
-เป็นประโยชน์ต่อตัวเอง ต่อญาติพี่น้อง ครอบครัว และต่อสังคม ตลอดจนถึงประเทศชาติหรือทั้งโลก ถือว่านี่คือการพัฒนาทรัพยากรมนุษย์  …”
+“...การบำรุงรักษาและป้องกันป่าไม้นั้น  ไม่ได้ผลเต็มที่เพราะเรามักจะไปเพ่งเล็งหรือใช้วิธีการที่จะเรียกได้ว่าเป็นการรังแกคน คือว่าคนที่อยู่ในป่าหรือคนที่อยู่ใกล้ป่าที่เขาไม่มีที่ทำมาหากิน เขาก็ต้องเข้าไปตัดไม้เพื่อเอาไปขายหรือเอามาสร้างบ้านเรือน หรือทำที่ทำมาหากินในที่นั้น  ซึ่งตามกฎหมายก็เป็นการผิดกฎหมายเพราะว่าเป็นป่าสงวน  แต่ถ้าเราไม่มีการจัดที่ทำมาหากินให้เขา  เขาก็ต้องทำอย่างนั้นเรื่อยไป  ฉะนั้นการบำรุงรักษาป่าไม้จึงต้องควบคู่ไปกับการจัดหาที่ทำมาหากินและอาชีพให้แก่ราษฎรที่อยู่ในเขตป่านั้น ๆ หรือที่อยู่ใกล้เคียง...”
 </p>
-                <span class="speech-source">พระราชดำรัสในโอกาสที่คณะผู้ปฏิบัติงานโครงการตามพระราชดำริ เข้าเฝ้าฯ
-<br>ณ ศาลาดุสิตดาลัย สวนจิตรลดา กรุงเทพมหานคร
-<br>วันอังคารที่ ๒๖ เมษายน พ.ศ. ๒๕๔๘</span>
+                <div class="quote-source">พระราชดำรัส พระบาทสมเด็จพระบรมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร</div>
             </div>
 
             <div class="desc-box-auto">
                 <p>
-<center>“ให้คนทั้งหลาย ได้มีโอกาสเจริญเติบโต”</center>
-<br>ทรงมีพระราชปณิธานในการพัฒนาชุมชนให้มีความเข้มแข็งและยั่งยืนโดยริเริ่ม
-โครงการพัฒนาที่สนับสนุนให้ประชาชนสามารถพึ่งพาตนเองและมีโอกาสเติบโตก้าวหน้า ให้ความรู้ สร้างโอกาส สร้างอาชีพ ทั้งในด้านการเกษตรและด้านศิลปวัฒนธรรม  
-พัฒนาทักษะในการเรียนรู้ ลงมือทำ อนุรักษ์ และสร้างสรรค์สิ่งใหม่
+แนวพระราชดำริว่าด้วยการพัฒนาและอนุรักษ์ทรัพยากรธรรมชาติอย่างยั่งยืน มุ่งเน้นการแก้ไขปัญหาที่สอดคล้องกับวิถีชีวิตของราษฎรในพื้นที่อย่างแท้จริง ทรงมองเห็นความเชื่อมโยงระหว่างความสมบูรณ์ของผืนป่าและความเป็นอยู่ของชุมชน การแก้ไขปัญหาสิ่งแวดล้อมจึงไม่อาจแยกออกจากปัญหาความยากจนได้ การสร้างกระบวนการเรียนรู้และส่งเสริมอาชีพทางเลือกที่พึ่งพาตนเองได้ เป็นเครื่องมือสำคัญที่แปรเปลี่ยนราษฎรจากการเป็นผู้ทำลายมาเป็นผู้พิทักษ์รักษาทรัพยากรท้องถิ่นของตน
 </p>
             </div>
 
             <div class="image-double-row">
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p1_left.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p1_left.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p1_left.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p1_right.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p1_right.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p1_right.jpg" onerror="this.style.display='none';">
                 </div>
             </div>
 
-            <div class="desc-box-auto">
-                <p>
-<center>“มีสุขภาพแข็งแรงทั้งร่างกาย และจิตใจ”</center>
-<br>“ภาวะทุพโภชนาการ” คือปัญหาของสังคมชนบท เด็กที่ร่างกายไม่แข็งแรงทำให้จิตใจและสติปัญญาไม่พร้อมที่จะศึกษาเล่าเรียน ขาดโอกาสในการพัฒนาความรู้ ความสามารถ ใน พ.ศ. ๒๕๒๓ ได้ทรงเริ่มงานพัฒนาเด็กและเยาวชนด้วยการทดลองในโรงเรียนตำรวจตระเวนชายแดน ในชื่อ “โครงการอาหารกลางวันผักสวนครัว” ขยายผล
-เป็น “โครงการเกษตรเพื่ออาหารกลางวัน” และเป็น “โครงการส่งเสริมพัฒนาการเด็กปฐมวัยในพื้นที่ทุรกันดาร” เพื่อพัฒนาเด็กเล็กอย่างรอบด้าน มีโครงการควบคุมโรคขาดสารไอโอดีนเพื่อลดจำนวนผู้ป่วยโรคคอพอก และโรคเอ๋อ อีกทั้งพระราชทานบริการทางการแพทย์และทันตกรรมโดยจัดให้มีหน่วย “แพทย์พระราชทาน” ตามเสด็จพระราชดำเนินทุกครั้ง และสนับสนุนค่าใช้จ่ายในการรักษาพยาบาลให้ประชาชนที่ขาดแคลน
-</p>
-            </div>
-
             <div class="image-double-row">
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p2_left.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p2_left.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p2_left.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p2_right.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p2_right.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p2_right.jpg" onerror="this.style.display='none';">
                 </div>
             </div>
 
             <div class="desc-box-auto">
                 <p>
-<center>“ได้รับการศึกษา ฝึกอบรมสั่งสอนเพื่อให้มีความรู้”</center>
-<br>“...การศึกษาไม่เพียงแต่ต้องส่งเสริมความรู้เท่านั้น แต่ยังต้องส่งเสริมให้เด็กและ
-เยาวชนมีทักษะชีวิตที่สามารถปรับตัวในโลกที่มีการเปลี่ยนแปลงได้อย่างรวดเร็ว 
-การเรียนรู้ต้องสอดคล้องกับความต้องการของสังคมและโลกในอนาคต...”
-</p>
-<br><p style="text-align: right;">
-<br>พระราชดำรัสในการประชุมวิชาการทางการศึกษาแห่งชาติ
-<br>วันจันทร์ที่ ๙ ธันวาคม ๒๕๖๒
-<br>ณ ศูนย์ประชุมแห่งชาติสิริกิติ์ กรุงเทพมหานคร
+การดำเนินงานสนองพระราชดำริผ่านโครงการต่าง ๆ ทั่วประเทศ พิสูจน์ให้เห็นว่า เมื่อราษฎรมีแหล่งน้ำสำหรับทำการเกษตร มีที่ดินทำกินที่มั่นคง และมีความรู้ในการจัดการผลผลิตอย่างเหมาะสม ชุมชนจะสามารถเติบโตได้อย่างเข็มแข็งควบคู่กับการฟื้นฟูระบบนิเวศ ความสำเร็จเหล่านี้เกิดจากการบูรณาการการทำงานร่วมกันของทุกภาคส่วน โดยมีเป้าหมายเพื่อประโยชน์สุขที่ยั่งยืนของราษฎรและสร้างความมั่นคงด้านทรัพยากรธรรมชาติให้กับประเทศชาติสืบไป
 </p>
             </div>
 
             <div class="image-double-row">
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p3_left.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p3_left.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p3_left.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame" style="height: 340px;">
+                <div class="img-frame">
+                    <img src="images8/p3_right.jpg" onerror="this.style.display='none';">
                     <div class="placeholder-info">
                         <b>p3_right.jpg</b>
                         <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
                     </div>
-                    <img src="images8/p3_right.jpg" onerror="this.style.display='none';">
-                </div>
-            </div>
-
-            <div class="image-double-row">
-                <div class="img-frame" style="height: 340px;">
-                    <div class="placeholder-info">
-                        <b>p4_left.jpg</b>
-                        <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
-                    </div>
-                    <img src="images8/p4_left.jpg" onerror="this.style.display='none';">
-                </div>
-                <div class="img-frame" style="height: 340px;">
-                    <div class="placeholder-info">
-                        <b>p4_right.jpg</b>
-                        <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
-                    </div>
-                    <img src="images8/p4_right.jpg" onerror="this.style.display='none';">
-                </div>
-            </div>
-
-            <div class="desc-box-auto">
-                <p>
-<center>“พัฒนาความสามารถ ทั้งคุณงามความดีที่จะปฏิบัติงานเป็นประโยชน์”</center>
-<br>ทรงปฏิบัติพระองค์เป็นแบบอย่างให้เห็นถึงความสำคัญของการพัฒนาตนเองเพื่อให้มีความสามารถที่จะเป็นประโยชน์ต่อสังคม ทรงมุ่งมั่นศึกษาและพัฒนาตนเองอยู่เสมอ แม้จะสำเร็จการศึกษาระดับปริญญาตรีและปริญญาโทในหลายสาขาวิชาแล้ว พระองค์ก็ยังทรงศึกษาต่อทั้งในและต่างประเทศ เรียนรู้ภาษา ศิลปะ และวิชาการหลายด้านซึ่งจะเป็นประโยชน์ต่อประชาชนและประเทศชาติอย่างต่อเนื่อง  เป็นแรงบันดาลใจให้ประชาชนไทยทุกคนมีความรับผิดชอบต่อตนเองและส่วนรวม 
-</p>
-            </div>
-
-            <div class="image-double-row">
-                <div class="img-frame" style="height: 340px;">
-                    <div class="placeholder-info">
-                        <b>p5_left.jpg</b>
-                        <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
-                    </div>
-                    <img src="images8/p5_left.jpg" onerror="this.style.display='none';">
-                </div>
-                <div class="img-frame" style="height: 340px;">
-                    <div class="placeholder-info">
-                        <b>p5_right.jpg</b>
-                        <span class="placeholder-dim">ขนาดแนะนำ: 540 x 340 px</span>
-                    </div>
-                    <img src="images8/p5_right.jpg" onerror="this.style.display='none';">
                 </div>
             </div>
 
@@ -334,7 +276,6 @@
     <footer>
         <div class="nav-links">
             <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
-            
             <a href="board1.html">บอร์ด 1</a>
             <a href="board2.html">บอร์ด 2</a>
             <a href="board3.html">บอร์ด 3</a>
