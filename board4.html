@@ -42,7 +42,7 @@
         }
 
         /* -----------------------------------------------
-           STYLE: กรอบรูปโลหะเงินเงา คุมธีมบอร์ดน้าเหมือนเดิม
+           [แก้ไข] STYLE: กรอบรูปโลหะเงินเงา ระบบภาพจริงดันขอบ
         -------------------------------------------------- */
         .img-frame {
             background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
@@ -51,49 +51,51 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
             border-radius: 2px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
             position: relative;
             margin-bottom: 25px;
         }
 
+        /* [แก้ไข] ให้รูปภาพดันขอบกรอบเงินออกมา ขอบจะแนบพอดีกับมิติภาพจริงตลอดเวลา */
         .img-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
+            height: auto;
+            position: relative;
             z-index: 3;
         }
 
+        /* จัดตำแหน่งข้อความจำลองให้อยู่กึ่งกลางสัดส่วนภาพจริง */
         .placeholder-info {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
             padding: 15px;
+            width: 100%;
+            pointer-events: none;
         }
         .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
-        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-        /* 1. แก้ไข: ปรับขนาดและสัดส่วนภาพใหญ่เดี่ยวบนสุดให้เป็นแนวตั้ง */
+        /* [แก้ไข] ถอดค่าความสูงแบบ Fix ออกเพื่อให้ขยายตามมิติภาพจริง */
         .single-main-img-vertical {
+            display: block;
             width: 100%;
-            max-width: 480px;  /* คุมความกว้างไม่ให้บานออกแนวนอน */
-            height: 680px;     /* ความสูงรับสัดส่วนแนวตั้งทรงยืน */
-            margin: 0 auto 30px; /* จัดกึ่งกลางอัตโนมัติ */
+            max-width: 480px;  
+            margin: 0 auto 30px; 
         }
 
-        /* 2. การจัดวางกรอบภาพคู่ ซ้าย-ขวา */
+        /* การจัดวางกรอบภาพคู่ ซ้าย-ขวา */
         .img-pair-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
             margin-bottom: 25px;
-        }
-
-        .pair-img-height {
-            height: 380px;
         }
 
         /* -----------------------------------------------
@@ -146,9 +148,9 @@
         /* Responsive */
         @media (max-width: 768px) {
             .img-pair-row { grid-template-columns: 1fr; gap: 15px; }
-            .pair-img-height { height: 280px; }
-            .single-main-img-vertical { height: 500px; }
             .main-heading-title { font-size: 2.2rem; }
+            .board-container { padding: 20px; }
+            .board-inner-border { padding: 20px 15px; }
         }
     </style>
 </head>
@@ -166,11 +168,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img1.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img1.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img2.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img2.jpg" onerror="this.style.display='none';">
                 </div>
@@ -196,11 +198,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img3.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img3.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img4.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img4.jpg" onerror="this.style.display='none';">
                 </div>
@@ -216,16 +218,15 @@
 หรือไม่เพียงพอสำหรับการบริโภคในชุมชน จึงมีพระราชดำริให้จัดตั้งโครงการต่าง ๆ
 เพื่อส่งเสริมความรู้ทางการเกษตรที่ถูกต้องเหมาะสม ทั้งด้านกระบวนการเพาะปลูกและ
 พันธุ์พืชใหม่ ๆ เพื่อให้ราษฎรเห็นว่าทำได้จริง มีผลสำเร็จ เช่น ...
-
 </p>
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img5.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img5.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img6.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img6.jpg" onerror="this.style.display='none';">
                 </div>
@@ -241,8 +242,6 @@
 ๓ ส่วน คือ การเรียนรู้ การใช้ประโยชน์  และการสร้างจิตสำนึก จนถึงปัจจุบัน โครงการมีการ
 จัดทำระบบข้อมูลพันธุกรรมพืชอย่างแพร่หลายสามารถสื่อถึงกันได้ทั่วประเทศ ประชาชนได้รับประโยชน์จากความหลากหลาย และตระหนักถึงความสำคัญของพันธุกรรมพืชต่าง ๆ
 ที่มีอยู่ในประเทศไทย เกิดการร่วมคิดร่วมปฏิบัติที่เป็นส่วนสำคัญต่อการพัฒนาอย่างยั่งยืน 
-
-
 </p>
             </div>
 
@@ -253,16 +252,15 @@
 ให้ครอบครัวพึ่งตนเองได้ และมีความเป็นอยู่ให้ดีขึ้น เกิดชุมชนที่เข้มแข็งยั่งยืน รวมกลุ่มกันเกิดเป็น “กลุ่มอาชีพประชาชนในถิ่นทุรกันดารตามพระราชดำริ” พระราชทานเงินให้เป็น
 กองทุนของกลุ่ม พระราชทานเครื่องมือ วัสดุอุปกรณ์ ก่อสร้างอาคารและจัดหาครูฝึกอบรมเพิ่มทักษะฝีมือและคุณภาพของผลิตภัณฑ์ ปัจจุบันมีกลุ่มอาชีพประชาชนใน
 ถิ่นทุรกันดารกระจายอยู่ในพื้นที่โครงการตามพระราชดำริอื่น ๆ ครอบคลุมทุกภาคของประเทศ
-
 </p>
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img7.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img7.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img8.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img8.jpg" onerror="this.style.display='none';">
                 </div>
@@ -279,11 +277,11 @@
             </div>
 
             <div class="img-pair-row">
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img9.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img9.jpg" onerror="this.style.display='none';">
                 </div>
-                <div class="img-frame pair-img-height">
+                <div class="img-frame">
                     <div class="placeholder-info"><b>img10.jpg</b><span class="placeholder-dim">ขนาดแนะนำ: 550 x 380 px</span></div>
                     <img src="images4/img10.jpg" onerror="this.style.display='none';">
                 </div>
@@ -300,7 +298,7 @@
 <br>
 <p>
 พ.ศ. ๒๕๕๑ ศูนย์เรียนรู้การพัฒนาอมก๋อยอันเนื่องมาจากพระราชดำริ  จังหวัดเชียงใหม่
-<br>อำเภออมก๋อยเป็นภูเขาสลับซับซ้อนต้นกำเนิดของแม่น้ำลำธาร   แต่ทุรกันดารรถเข้าไม่ถึง
+<br>อำเภออมก๋อยเป็นภูเขาสูงสลับซับซ้อนต้นกำเนิดของแม่น้ำลำธาร   แต่ทุรกันดารรถเข้าไม่ถึง
 ทำให้เด็กขาดโอกาสทางการศึกษา ประชาชนยากลำบาก จึงทรงให้นำโครงการพัฒนาเด็ก
 และเยาวชนมาดำเนินการในศูนย์การเรียนชุมชนชาวไทยภูเขา “แม่ฟ้าหลวง” อำเภออมก๋อย ใน พ.ศ. ๒๕๔๑ เพื่อให้เด็กได้รับโอกาสในการศึกษาและพัฒนาสภาพพื้นที่ชุมชน และมีพระราชดำริให้รวมกลุ่มกันทอผ้ากะเหรี่ยงเป็นอาชีพสร้างรายได้ให้ครอบครัว สร้างความเจริญให้ชุมชนเป็นลำดับ
 </p>
@@ -323,11 +321,10 @@
     <footer>
         <div class="nav-links">
             <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
-            
             <a href="board1.html">บอร์ด 1</a>
             <a href="board2.html">บอร์ด 2</a>
             <a href="board3.html">บอร์ด 3</a>
-            <a href="board4.html">บอร์ด 4</a>
+            <a href="board4.html" class="active">บอร์ด 4</a>
             <a href="board5.html">บอร์ด 5</a>
             <a href="board6.html">บอร์ด 6</a>
             <a href="board7.html">บอร์ด 7</a>
