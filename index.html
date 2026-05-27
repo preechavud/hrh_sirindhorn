@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าแรก - นิทรรศการเฉลิมพระเกียรติโครงการอันเนื่องมาจากพระราชดำริ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Thasadith:wght@400;700&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #5d4668;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background: linear-gradient(to bottom, #bda2cb 0%, #a589b4 55%, #6a4f77 55%, #50375b 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px 30px;
+        }
+
+        .inner-canvas {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 30px 20px;
+        }
+
+        /* [แก้ไข] กรอบทองคำ: ปรับให้ย่อสัดส่วนตามหน้าจอด้วย clamp */
+        .luxury-frame-wrapper {
+            width: 100%;
+            max-width: 750px; 
+            margin: 0 auto 30px;
+            /* ปรับ padding ให้บางลงโดยใช้สัดส่วนหน้าจอ */
+            padding: clamp(5px, 1.5vw, 10px); 
+            background: linear-gradient(135deg, #f3e0b5, #dfb76c, #bca061, #f5dfb2, #9a7d3a); 
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        /* [แก้ไข] กรอบภาพด้านใน: ให้บางลงและยืดหยุ่นขึ้น */
+        .img-frame {
+            background: #170b1d;
+            border: clamp(2px, 0.5vw, 4px) solid #422a50; 
+            aspect-ratio: 800 / 540; 
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .img-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-section { text-align: center; margin: 30px 0; }
+        .main-title { font-family: 'Thasadith', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 10px; }
+        .sub-title { font-size: clamp(1rem, 2vw, 1.3rem); color: #f0f0f0; }
+
+        /* เมนู Grid */
+        .board-menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
+        .menu-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 15px; text-decoration: none; color: #ffffff; text-align: center; transition: 0.3s; }
+        .menu-card:hover { background: #ffffff; color: #2c1933; }
+        .menu-number { font-weight: 700; color: #ffeb3b; display: block; font-size: 0.9rem; }
+
+        /* ตราสัญลักษณ์ */
+        .emblem-center { display: flex; justify-content: center; margin-bottom: 20px; }
+        .emblem-box { width: 120px; }
+        .emblem-box img { width: 100%; }
+
+        .copyright-section { background-color: #1a0f21; padding: 20px; text-align: center; color: #dcdcdc; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .fb-button { display: inline-flex; align-items: center; background-color: #1877f2; color: #ffffff; text-decoration: none; padding: 6px 15px; border-radius: 20px; font-weight: 600; margin-top: 10px; font-size: 0.75rem; }
+
+        @media (max-width: 768px) {
+            .board-menu-grid { grid-template-columns: 1fr; }
+            .home-container { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="home-container">
+        <div class="inner-canvas">
+            <div class="luxury-frame-wrapper">
+                <div class="img-frame">
+                    <img src="images_home/hero_home.jpg" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div class="header-section">
+                <h1 class="main-title">รัตนราชสุดา สู่สายธารแห่งการพัฒนา</h1>
+                <p class="sub-title">นิทรรศการโครงการอันเนื่องมาจากพระราชดำริ</p>
+            </div>
+
+            <div class="board-menu-grid">
+                <a href="board1.html" class="menu-card"><span class="menu-number">BOARD 1</span>สู่สายธารแห่งการพัฒนา</a>
+                <a href="board2.html" class="menu-card"><span class="menu-number">BOARD 2</span>พระราชประวัติ</a>
+                <a href="board3.html" class="menu-card"><span class="menu-number">BOARD 3</span>งานด้านการศึกษา</a>
+                <a href="board4.html" class="menu-card"><span class="menu-number">BOARD 4</span>ชนบทและเกษตรกรรม</a>
+                <a href="board5.html" class="menu-card"><span class="menu-number">BOARD 5</span>งานสาธารณสุข</a>
+                <a href="board6.html" class="menu-card"><span class="menu-number">BOARD 6</span>อนุรักษ์ศิลปวัฒนธรรม</a>
+                <a href="board7.html" class="menu-card"><span class="menu-number">BOARD 7</span>ความสัมพันธ์กับต่างประเทศ</a>
+                <a href="board8.html" class="menu-card"><span class="menu-number">BOARD 8</span>ถอดความตามพระราชดำรัส</a>
+                <a href="board9.html" class="menu-card"><span class="menu-number">BOARD 9</span>สำนักงาน กปร.</a>
+            </div>
+
+            <div class="emblem-center">
+                <div class="emblem-box">
+                    <img src="images_home/emblem.png" alt="Royal Emblem" onerror="this.style.display='none';">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-section">
+        <div>สำนักงานคณะกรรมการพิเศษ เพื่อประสานงานโครงการอันเนื่องมาจากพระราชดำริ (สำนักงาน กปร.)</div>
+        <a href="https://www.facebook.com/RDPBProject" target="_blank" class="fb-button">ติดตามข้อมูลโครงการ กปร.</a>
+    </div>
+
+</body>
+</html>
