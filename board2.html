@@ -91,7 +91,7 @@
         }
 
         /* ------------------------------------------------------------------
-           [การจัดการรูปภาพและการซ่อนข้อความจำลองเบื้องหลัง]
+           [การจัดการรูปภาพและกรอบรูปแบบมาตรฐานเดียวกับทุก Board]
         ------------------------------------------------------------------ */
         .img-box-wide, 
         .img-box-gallery,
@@ -105,79 +105,52 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3);
             border-radius: 2px;
             position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* แท็กรูปภาพทำงานสัมพันธ์กับตัวกรอบโดยตรง ไม่ทับซ้อนผิดเพี้ยนเวลาปรับหน้าจอ */
+        .img-box-wide img, 
+        .img-box-gallery img,
+        .main-royal-img-box img,
+        .img-box-square-timeline img,
+        .img-box-auto-timeline img {
+            display: block;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
-        /* ใช้ CSS pseudo-element สร้างตัวหนังสือจำลองขึ้นมาเบื้องหลัง (ถ้าไม่มีรูปภาพจะเห็นสิ่งนี้) */
-        .img-box-wide::before,
-        .img-box-gallery::before,
-        .main-royal-img-box::before,
-        .img-box-square-timeline::before,
-        .img-box-auto-timeline::before {
-            content: attr(data-file);
-            position: absolute;
-            z-index: 1;
-            color: #ffeb3b;
-            font-size: 0.85rem;
-            font-weight: bold;
-            opacity: 0.4;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        /* จัดสัดส่วนกรอบรูปภาพหลัก */
+        /* จัดสัดส่วนและลักษณะการวางภาพของแต่ละกรอบตามดีไซน์เดิม */
         .main-royal-img-box {
             border: 2px solid #f0f0f0;
             box-shadow: 0 0 0 2px #ffffff, 0 8px 24px rgba(0,0,0,0.4);
             aspect-ratio: 3 / 4;
         }
+        .main-royal-img-box img {
+            object-fit: cover;
+        }
 
-        /* จัดสัดส่วนกรอบภาพในไทม์ไลน์ (แบบปกติที่เป็นสี่เหลี่ยมจัตุรัส) */
+        .img-box-wide img, 
+        .img-box-gallery img {
+            object-fit: contain;
+        }
+
+        /* สไตล์กรอบภาพในไทม์ไลน์แบบจัตุรัสปกติ */
         .timeline-detail .img-box-square-timeline {
             margin: 15px 0;
             aspect-ratio: 1 / 1; 
         }
-
-        /* [เพิ่มจุดแก้ไขพิเศษ] กรอบภาพสำหรับภาพสัดส่วนธรรมชาติ ไม่บังคับจัตุรัส */
-        .timeline-detail .img-box-auto-timeline {
-            margin: 15px 0;
-            height: auto;
-            max-height: 400px; /* จำกัดความสูงสูงสุดเพื่อความสวยงามในไทม์ไลน์ */
-        }
-
-        /* บังคับสไตล์ของแท็กรูปภาพจริงทั้งหมดให้ขึ้นมาคลุมทับ */
-        .top-section img,
-        .timeline-wrapper img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 2; /* ทับตัวอักษรจำลองด้านล่างเสมอ */
-            background-color: #35233d; /* ถมสีพื้นหลังที่ตัวภาพเพื่อกันตัวหนังสือทะลุซ้อน */
-        }
-
-        /* สำหรับกรอบภาพสัดส่วนธรรมชาติ ให้แสดงผลตามขนาดจริง ไม่จัดแบบ absolute คลุม */
-        .timeline-detail .img-box-auto-timeline img {
-            position: relative;
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        /* แยกส่วนของ Object-fit ตามความต้องการเดิม */
-        .main-royal-img-box img,
-        .img-box-square-timeline img {
+        .timeline-detail .img-box-square-timeline img {
             object-fit: cover;
         }
-        .img-box-wide img, 
-        .img-box-gallery img {
+
+        /* [แก้ไขจุดสำคัญ] สไตล์กรอบภาพตามสัดส่วนจริงอิงตามดีไซน์หลักทุก Board */
+        .timeline-detail .img-box-auto-timeline {
+            margin: 15px 0;
+            height: auto; /* ให้ตัวกล่องยุบ-ขยายตามความสูงจริงของรูปภาพ */
+        }
+        .timeline-detail .img-box-auto-timeline img {
+            height: auto; /* ภาพดันความสูงกรอบตามสัดส่วนธรรมชาติ */
             object-fit: contain;
         }
 
@@ -333,25 +306,25 @@
                     
                     <div class="left-images-container">
                         <div class="sub-row-top">
-                            <div class="img-box-wide" data-file="img1.jpg">
-                                <img src="images2/img1.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-wide">
+                                <img src="images2/img1.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                         
                         <div class="sub-row-bottom-grid">
-                            <div class="img-box-gallery" data-file="img3.jpg">
-                                <img src="images2/img3.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-gallery">
+                                <img src="images2/img3.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
-                            <div class="img-box-gallery" data-file="img4.jpg">
-                                <img src="images2/img4.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-gallery">
+                                <img src="images2/img4.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="right-column-layout">
-                    <div class="main-royal-img-box" data-file="main.jpg">
-                        <img src="images2/main.jpg" onerror="this.style.display='none';">
+                    <div class="main-royal-img-box">
+                        <img src="images2/main.jpg" onerror="this.parentNode.style.display='none';">
                     </div>
                 </div>
             </div>
@@ -372,7 +345,7 @@
                     <p style="font-size: 1.3rem; font-weight: 600; color: #ffeb3b; text-shadow: 1px 1px 2px rgba(0,0,0,0.4);">สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าสิรินธรเทพรัตนสุดา กิติวัฒนาดุลโสภาคย์</p>
                 </div>
                 
-                <p style="text-indent: 2.5em; margin-bottom: 15px;">พร้อมทั้งประทานคำแปลว่า “นางแก้ว” อันหมายถึงหญิงผู้ประเสริฐ และทรงมีพระนามลำลองในครอบครัวว่า “ทูลกระหม่อมน้อย” ซึ่งแสดงถึงความรัก ความสนิทสนมที่พระราชวงศ์มีต่อพระองค์ ทรงมีพระโสธรเชษฐภคินี ๑ พระองค์ คือ ทูลกระหม่อมหญิงอุบลรัตนราชกัญญา สิริวัฒนาพรรณวดี มีพระโสธรเชษฐา ๑ พระองค์ คือ พระบาทสมเด็จพระเจ้าอยู่หัว และมีพระขนิษฐา ๑ พระองค์ คือสมเด็จพระเจ้าน้องนางเธอ เจ้าฟ้าจุฬาภรณวลัยลักษณ์ อัครราชกุมารี กรมพระศรีสวางควัฒน วรขัตติยราชนารี</p>
+                <p style="text-indent: 2.5em; margin-bottom: 15px;">พร้อมทั้งประทานคำแปลว่า “นางแก้ว” อันหมายถึงหญิงผู้ประเสริฐ และทรงมีพระนามลำลองในครอบครัวว่า “ทูลกระหม่อมน้อย” ซึ่งแสดงถึงความรัก ความสนิทสนมที่พระราชวงศ์มีต่อพระองค์ ทรงมีพระโสธรเชษฐภคินี ๑ พระองค์ คือ ทูลกระหม่อมหญิงอุบลรัตนราชกัญญา สิริวัฒนาพรรณวดี มีพระโสธรเชษฐา ๑ พระองค์ คือ พระบาทสมเด็จพระเจ้าหัว และมีพระขนิษฐา ๑ พระองค์ คือสมเด็จพระเจ้าน้องนางเธอ เจ้าฟ้าจุฬาภรณวลัยลักษณ์ อัครราชกุมารี กรมพระศรีสวางควัฒน วรขัตติยราชนารี</p>
                 <p style="text-indent: 2.5em; margin-bottom: 15px;">ทรงเจริญพระชนมพรรษาท่ามกลางพระราชวงศ์ที่เปี่ยมไปด้วยคุณธรรมและความเมตตาต่อพสกนิกร จึงมีพระราชจริยวัตรที่เปี่ยมไปด้วยความสุภาพอ่อนโยน และในขณะเดียวกันก็ทรงพระวิริยอุตสาหะในการประกอบพระราชกรณียกิจนานัปการอย่างมุ่งมั่น ไม่ย่อท้อต่อความลำบาก ทรงได้รับการอบรมดูแลอย่างใกล้ชิดจากสมเด็จพระบรมชนกนาถ และสมเด็จพระบรมราชชนนีพันปีหลวง ในการพัฒนาคุณภาพชีวิตราษฎรให้ดีขึ้นมาโดยตลอด</p>
             </div>
 
@@ -383,8 +356,8 @@
                         <div class="timeline-year">พ.ศ. ๒๔๙๘</div>
                         <div class="timeline-detail">
                             <p><b>๒๔๙๘</b> พระราชสมภพ ณ พระที่นั่งอัมพรสถาน พระราชวังดุสิต</p>
-                            <div class="img-box-square-timeline" data-file="2498.jpg">
-                                <img src="images2/2498.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2498.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -397,8 +370,8 @@
                             <p><b>๒๕๐๑</b> ทรงเริ่มศึกษาระดับอนุบาล ที่ ร.ร.จิตรลดา</p>
                             <p><b>๒๕๑๐</b> ทรงสำเร็จการศึกษาระดับประถมฯ คะแนนอันดับ ๑ ของประเทศ</p>
                             <p><b>๒๕๑๑</b> ทรงเริ่มศึกษาระดับมัธยม ที่ ร.ร.จิตรลดา</p>
-                            <div class="img-box-square-timeline" data-file="2511.jpg">
-                                <img src="images2/2511.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2511.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -411,8 +384,8 @@
                             <p><b>๒๕๑๕</b> ทรงสอบ ม.๕ แผนกศิลป์ ได้ที่ ๑ ของประเทศ (๘๙.๓%)</p>
                             <p><b>๒๕๑๖</b> ทรงเริ่มศึกษาคณะอักษรศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย</p>
                             <p><b>๒๕๒๐</b> ทรงสำเร็จการศึกษาอักษรศาสตร์บัณฑิต สาขาประวัติศาสตร์ (เกียรตินิยมอันดับ ๑) จุฬาลงกรณ์มหาวิทยาลัย</p>
-                            <div class="img-box-auto-timeline" data-file="2520-1.jpg">
-                                <img src="images2/2520-1.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-auto-timeline">
+                                <img src="images2/2520-1.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -423,8 +396,8 @@
                         <div class="timeline-year">พ.ศ. ๒๕๒๐ (สภากาชาดไทย)</div>
                         <div class="timeline-detail">
                             <p><b>๒๕๒๐</b> ทรงดำรงตำแหน่งอุปนายิกาผู้อำนวยการสภากาชาดไทย</p>
-                            <div class="img-box-square-timeline" data-file="2520-2.jpg">
-                                <img src="images2/2520-2.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2520-2.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -435,8 +408,8 @@
                         <div class="timeline-year">พ.ศ. ๒๕๒๐ (สถาปนาพระอิสริยศักดิ์)</div>
                         <div class="timeline-detail">
                             <p><b>๒๕๒๐</b> พระราชพิธีสถาปนาพระอิสริยศักดิ์ในการพระราชพิธีเฉลิมพระชนมพรรษา</p>
-                            <div class="img-box-square-timeline" data-file="2520-3.jpg">
-                                <img src="images2/2520-3.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2520-3.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -449,8 +422,8 @@
                             <p><b>๒๕๒๑</b> ทรงเริ่มศึกษาปริญญาโทที่จุฬาฯ และศิลปากร พร้อมกัน</p>
                             <p><b>๒๕๒๓</b> ทรงเริ่มโครงการเกษตรเพื่ออาหารกลางวัน</p>
                             <p><b>๒๕๒๙</b> ทรงสำเร็จการศึกษาระดับปริญญาดุษฎีบัณฑิต สาขาพัฒนศึกษาศาสตร์ มหาวิทยาลัยศรีนครินทรวิโรฒ (มศว.)</p>
-                            <div class="img-box-square-timeline" data-file="2529.jpg">
-                                <img src="images2/2529.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2529.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -461,8 +434,8 @@
                         <div class="timeline-year">พ.ศ. ๒๕๓๑ (มูลนิธิชัยพัฒนา)</div>
                         <div class="timeline-detail">
                             <p><b>๒๕๓๑</b> ทรงดำรงตำแหน่งองค์ประธาน กรรมการมูลนิธิชัยพัฒนา</p>
-                            <div class="img-box-square-timeline" data-file="2531.jpg">
-                                <img src="images2/2531.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2531.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -477,8 +450,8 @@
                             <p><b>๒๕๓๔</b> ทรงจัดตั้งกองทุนพัฒนาเด็กและเยาวชนในถิ่นทุรกันดาร (กพด.)</p>
                             <p><b>๒๕๓๕</b> ทรงเริ่มโครงการอนุรักษ์พันธุกรรมพืช</p>
                             <p><b>๒๕๓๗</b> ทรงเริ่มโครงการปลูกป่าชายเลนที่ จ. เพชรบุรี และพระราชทานนามนกสายพันธุ์ใหม่ ว่า “นกเจ้าฟ้าหญิงสิรินธร”</p>
-                            <div class="img-box-square-timeline" data-file="2537.jpg">
-                                <img src="images2/2537.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2537.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -489,8 +462,8 @@
                         <div class="timeline-year">พ.ศ. ๒๕๓๘ (อุทยานธรรมชาติวิทยาฯ)</div>
                         <div class="timeline-detail">
                             <p><b>๒๕๓๘</b> ทรงเริ่มโครงการอุทยานธรรมชาติวิทยาฯ ตามพระราชดำริฯ</p>
-                            <div class="img-box-square-timeline" data-file="2538.jpg">
-                                <img src="images2/2538.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2538.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -502,8 +475,8 @@
                         <div class="timeline-detail">
                             <p><b>๒๕๓๘</b> ทรงเริ่มโครงการเทคโนโลยีสารสนเทศฯ</p>
                             <p><b>๒๕๔๒</b> ทรงจัดตั้งศูนย์ภูฟ้าพัฒนา จังหวัดน่าน เพื่อยกระดับคุณภาพชีวิตราษฎร</p>
-                            <div class="img-box-square-timeline" data-file="2542.jpg">
-                                <img src="images2/2542.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2542.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -517,8 +490,8 @@
                             <p><b>๒๕๕๔</b> ทรงเริ่มโครงการครูป่าไม้</p>
                             <p><b>๒๕๕๖</b> ทรงเริ่มโครงการสร้างป่า สร้างรายได้</p>
                             <p><b>๒๕๕๗</b> ทรงเปิดศูนย์กสิกรรม-ป่าไม้ หนองเต่า สปป.ลาว</p>
-                            <div class="img-box-square-timeline" data-file="2557.jpg">
-                                <img src="images2/2557.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2557.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -530,9 +503,9 @@
                         <div class="timeline-detail">
                             <p><b>๒๕๕๙</b> ทรงเริ่มโครงการทหารพันธุ์ดี</p>
                             <p><b>๒๕๖๑</b> ทรงเริ่มโครงการน้ำดื่มสะอาดในโรงเรียนตำรวจตระเวนชายแดน</p>
-                            <p><b>๒๕๖๒</b> พระราชพิธีเฉลิมพระนามาภิไธย ในการพระราชพิธีบรมราชาภิเษก พุทธศักราช ๒๕๖๒</p>
-                            <div class="img-box-square-timeline" data-file="2562.jpg">
-                                <img src="images2/2562.jpg" onerror="this.style.display='none';">
+                            <p><b>๒๕๖๒</b> พระราชพิธีเฉลิมพระนามาภิไธย ในการพระราชพิธีบรมราชาภิเษก พุทธศักราช ๒๕६๒</p>
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2562.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                         </div>
                     </div>
@@ -543,8 +516,8 @@
                         <div class="timeline-year">พ.ศ. ๒๕๖๓ - ปัจจุบัน</div>
                         <div class="timeline-detail">
                             <p><b>๒๕๖๓</b> เสด็จฯ ติดตามการดำเนินงาน รร. ตชด. เป็นครั้งที่ ๑,๐๐๐</p>
-                            <div class="img-box-square-timeline" data-file="2563.jpg">
-                                <img src="images2/2563.jpg" onerror="this.style.display='none';">
+                            <div class="img-box-square-timeline">
+                                <img src="images2/2563.jpg" onerror="this.parentNode.style.display='none';">
                             </div>
                             <p><b>๒๕๖๓</b> ทรงตั้งศูนย์ผลิตพันธุ์สัตว์พระราชทาน ปากพนัง จ.นครศรีธรรมราช</p>
                             <p><b>ปัจจุบัน</b> ทรงติดตามการดำเนินงานศูนย์สาขาของศูนย์ศึกษาการพัฒนาฯ สม่ำเสมอ</p>
@@ -555,7 +528,7 @@
             </div>
 
             <div class="emblem-bottom-center">
-                <div class="emblem-box"><img src="images2/emblem.png" onerror="this.style.display='none';"></div>
+                <div class="emblem-box"><img src="images2/emblem.png" onerror="this.parentNode.style.display='none';"></div>
             </div>
 
         </div>
