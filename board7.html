@@ -51,7 +51,7 @@
             line-height: 1.2;
         }
 
-        /* กรอบรูปโลหะเงินเงา คุมธีมมาตรฐาน */
+        /* [แก้ไข] ปรับโครงสร้างกรอบภาพโลหะเงินเงา ให้ยึดขนาดกระชับพอดีตามรูปภาพจริงด้านใน */
         .img-frame {
             background: linear-gradient(135deg, rgba(74, 52, 84, 0.9) 0%, rgba(53, 35, 61, 0.95) 100%);
             border: 1px solid #e0e0e0;
@@ -59,29 +59,35 @@
             box-shadow: 0 0 0 1px #ffffff, 0 4px 12px rgba(0,0,0,0.3), inset 0 0 8px rgba(255,255,255,0.15);
             border-radius: 2px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
             position: relative;
             margin-bottom: 30px;
         }
 
+        /* [แก้ไข] ให้รูปภาพดันขอบกรอบเงินออกมา กรอบจะแนบสนิทเข้ากับขอบภาพตลอดเวลา */
         .img-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 3;
+            height: auto;
+            position: relative;
+            z-index: 2;
         }
 
+        /* จัดตำแหน่งข้อมูลจำลองให้อยู่กึ่งกลางกรอบอย่างถูกต้อง */
         .placeholder-info {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 1;
             text-align: center;
+            width: 100%;
+            pointer-events: none;
         }
-        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 2px rgba(0,0,0,0.6); }
-        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; }
+        .placeholder-info b { color: #ffeb3b; font-size: 1.1rem; display: block; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .placeholder-dim { color: #a2f2a2; font-size: 0.85rem; font-weight: 600; display: block; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
         /* โซนลายเซ็น พื้นใส ไม่มีกรอบ */
         .signature-area {
@@ -91,6 +97,7 @@
         }
         .signature-area img {
             max-width: 450px;
+            width: 100%;
             height: auto;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
         }
@@ -226,6 +233,8 @@
             .tl-body { flex-direction: column; align-items: center; }
             .tl-img { width: 100%; max-width: 150px; height: 120px; }
             .main-heading { font-size: 2.2rem; }
+            .board-container { padding: 20px; }
+            .inner-canvas { padding: 20px 15px; }
         }
     </style>
 </head>
@@ -238,16 +247,16 @@
                 พระราชกรณียกิจ<br>ด้านความสัมพันธ์กับต่างประเทศ
             </div>
 
-            <div class="img-frame" style="height: 520px;">
+            <div class="img-frame" style="display: block;">
+                <img src="images7/main.jpg" onerror="this.style.display='none';">
                 <div class="placeholder-info">
                     <b>main.jpg</b>
                     <span class="placeholder-dim">ขนาดแนะนำ: 1120 x 520 px (แนวนอนเดี่ยว)</span>
                 </div>
-                <img src="images7/main.jpg" onerror="this.style.display='none';">
             </div>
 
             <div class="signature-area">
-                <div style="text-align: center;">
+                <div style="text-align: center; width: 100%;">
                     <img src="images7/signature.png" alt="Royal Signature" onerror="this.style.display='none';">
                     <span class="sig-label">signature.png (ลายเซ็นพื้นใส ไม่มีกรอบ)</span>
                 </div>
@@ -259,30 +268,28 @@
 ราชอาณาจักรกัมพูชา สาธารณรัฐสังคมนิยมเวียดนาม ประเทศมองโกเลีย ราชอาณาจักรภูฏาน สาธารณรัฐประชาชนบังกลาเทศ สาธารณรัฐอินโดนีเซีย สาธารณรัฐฟิลิปปินส์ และสาธารณรัฐประชาธิปไตยติมอร์-เลสเต โดยทรงขยายผลสำเร็จจากโครงการอันเนื่องมาจากพระราชดำริไปสู่เด็ก เยาวชน
 และผู้ด้อยโอกาส เพื่อให้แต่ละประเทศได้น้อมนำไปประยุกต์ใช้ตามบริบทของตนอย่างเหมาะสม เกิดผลที่เป็นรูปธรรมและยั่งยืนในระยะยาว นอกจากนี้ ยังทรงประสานความร่วมมือกับองค์การระหว่างประเทศหลายแห่ง เช่น องค์การยูเนสโก (UNESCO) โครงการอาหารโลก (WFP) องค์การอาหารและเกษตรแห่งสหประชาชาติ (FAO) รวมถึงภาคเอกชนเพื่อร่วมแรงร่วมใจสร้างสรรค์ความผาสุก ความสงบ และคุณภาพชีวิตที่ดีแก่ผู้คนในโลกยุคไร้พรมแดน
 </p>
-<p>ด้วยเหตุนี้ สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี จึงทรงได้รับการยกย่องจากนานาประเทศในพระปรีชาสามารถ รวมถึงแนวการปฏิบัติพระราชกรณียกิจด้วยพระวิริยอุตสาหะและการพัฒนางานอย่างไม่หยุดยั้ง จนเกิดผลสำเร็จที่เป็นรูปธรรม และกลายเป็นแรงบันดาลใจในการพัฒนาทรัพยากรมนุษย์อย่างต่อเนื่อง
+<p style="margin-top: 15px;">ด้วยเหตุนี้ สมเด็จพระกนิษฐาธิราชเจ้า กรมสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี จึงทรงได้รับการยกย่องจากนานาประเทศในพระปรีชาสามารถ รวมถึงแนวการปฏิบัติพระราชกรณียกิจด้วยพระวิริยอุตสาหะและการพัฒนางานอย่างไม่หยุดยั้ง จนเกิดผลสำเร็จที่เป็นรูปธรรม และกลายเป็นแรงบันดาลใจในการพัฒนาทรัพยากรมนุษย์อย่างต่อเนื่อง</p>
             </div>
 
-            <div class="img-frame" style="width: 100%; max-width: 700px; height: 900px; margin: 0 auto 40px;">
+            <div class="img-frame" style="max-width: 600px; display: block; margin: 0 auto 40px;">
+                <img src="images7/vertical_hero.jpg" onerror="this.style.display='none';">
                 <div class="placeholder-info">
                     <b>vertical_hero.jpg</b>
                     <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้งเดี่ยว)</span>
                 </div>
-                <img src="images7/vertical_hero.jpg" onerror="this.style.display='none';">
             </div>
 
             <div class="desc-box-auto">
                 <p>ตัวอย่างผลสำเร็จของโครงการความร่วมมือด้านการพัฒนาคุณภาพชีวิตเด็กและเยาวชนในโรงเรียนสาธารณรัฐประชาธิปไตยประชาชนลาวตามพระราชดำริฯ ที่ทรงพระกรุณาโปรดเกล้าฯ ให้จัดทำขึ้น เพื่อส่งเสริมโภชนาการและสุขอนามัยในเด็กและเยาวชน การทำการเกษตรที่เป็นมิตรกับสิ่งแวดล้อมในโรงเรียน  และการอนุรักษ์ทรัพยากรธรรมชาติ และสิ่งแวดล้อม รวมไปถึงการอนุรักษ์ศิลปะและวัฒนธรรมท้องถิ่น มีโรงเรียนที่เข้าร่วมโครงการในระบบประถมศึกษา และมัธยมศึกษา จำนวน ๑๕ แห่ง จาก ๖ แขวง และเสด็จพระราชดำเนินไปทรงติดตามความก้าวหน้าการดำเนินงานย่างต่อเนื่อง ได้ทอดพระเนตรชีวิตความเป็นอยู่ของประชาชนสาธารณรัฐประชาธิปไตยประชาชนลาวอย่างใกล้ชิดและทรงรับทราบถึงปัญหาและอุปสรรคต่าง ๆ จึงมีพระราชดำริให้ขยายความร่วมมือระหว่างประเทศในหลายมิติ เพื่อยกระดับคุณภาพชีวิต</p>
             </div>
 
-
-            <div class="img-frame" style="width: 100%; max-width: 1020px; height: 950px; margin: 0 auto 40px;">
+            <div class="img-frame" style="max-width: 600px; display: block; margin: 0 auto 40px;">
+                <img src="images7/timeline.jpg" onerror="this.style.display='none';">
                 <div class="placeholder-info">
                     <b>timeline.jpg</b>
                     <span class="placeholder-dim">ขนาดแนะนำ: 600 x 850 px (แนวตั้งเดี่ยว)</span>
                 </div>
-                <img src="images7/timeline.jpg" onerror="this.style.display='none';">
             </div>
-
 
             <div class="emblem-center">
                 <div class="emblem-box">
@@ -296,14 +303,13 @@
     <footer>
         <div class="nav-links">
             <a href="index.html" style="background-color: #6a4f77; border-color: #ffeb3b; font-weight: 600;">หน้าแรก</a>
-            
             <a href="board1.html">บอร์ด 1</a>
             <a href="board2.html">บอร์ด 2</a>
             <a href="board3.html">บอร์ด 3</a>
             <a href="board4.html">บอร์ด 4</a>
             <a href="board5.html">บอร์ด 5</a>
             <a href="board6.html">บอร์ด 6</a>
-            <a href="board7.html">บอร์ด 7</a>
+            <a href="board7.html" class="active">บอร์ด 7</a>
             <a href="board8.html">บอร์ด 8</a>
             <a href="board9.html">บอร์ด 9</a>
         </div>
